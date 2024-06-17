@@ -15,4 +15,5 @@ private:
 	int hImage;
 	GameObject* sceneTop;
 	bool prevSpaceKey;
+	float jumpSpeed;
 };

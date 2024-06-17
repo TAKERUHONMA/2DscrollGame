@@ -17,13 +17,22 @@ Stone::~Stone()
 
 void Stone::Update()
 {
-	transform_.position_.y -= 0.6f;
-	transform_.position_.x += 0.6f;
-
-	if (--timer <= 0)
+	if (timer <= 300)
+	{
+		transform_.position_.x += 1.0f;
+		transform_.position_.y += 9.8f / 60.0f;
+	}
+	else
+	{
+		transform_.position_.x += 1.0f;
+		transform_.position_.y -= 9.8f / 60.0f;
+	}
+	
+	if (transform_.position_.y == 400)
 	{
 		KillMe();
 	}
+	--timer;
 }
 
 void Stone::Draw()
@@ -36,5 +45,5 @@ void Stone::Draw()
 void Stone::SetPosition(XMFLOAT3 pos)
 {
 	transform_.position_ = pos;
-	timer = 1800;
+	timer = 600;
 }

@@ -1,5 +1,6 @@
 #include "Field.h"
 #include <assert.h>
+#include "Engine/CsvReader.h"
 
 Field::Field(GameObject* scene)
 {
@@ -21,4 +22,14 @@ void Field::Update()
 
 void Field::Draw()
 {
+}
+
+void Field::Reset()
+{
+	CsvReader csv;
+	bool ret = csv.Load("Assets/stage1.csv");
+	assert(ret);
+	int width = csv.GetWidth();
+	int height = csv.GetHeight();
+
 }

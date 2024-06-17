@@ -11,6 +11,7 @@ public:
 	~Field();
 	void Update() override;
 	void Draw() override;
+	void Reset();
 private:
 	int hImage;
 };
