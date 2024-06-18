@@ -1,6 +1,13 @@
 #include "Stone.h"
 #include <assert.h>
 
+namespace {
+	const float MOVE_SPEED = 0.5f;
+	const float GROUND = 400.0f;
+	const float JUMP_HEIGHT = 64.0f * 4.0f;
+	const float GRAVITY = 9.8f / 60.0f;
+}
+
 Stone::Stone(GameObject* scene) : GameObject(scene)
 {
 	hImage = LoadGraph("Assets/stone.png");
@@ -18,20 +25,28 @@ Stone::~Stone()
 void Stone::Update()
 {
 	if (timer <= 300)
-	{
-		transform_.position_.x += 1.0f;
-		transform_.position_.y += 9.8f / 60.0f;
+	{	
+		transform_.position_.x += 2.0f;
+		transform_.position_.y += sqrtf(2 * GRAVITY * JUMP_HEIGHT);
 	}
 	else
 	{
-		transform_.position_.x += 1.0f;
-		transform_.position_.y -= 9.8f / 60.0f;
+		transform_.position_.x += 2.0f;
+		transform_.position_.y -= sqrtf(2 * GRAVITY * JUMP_HEIGHT);
+	}
+	jumpSpeed += GRAVITY;
+	transform_.position_.y += jumpSpeed;
+	if (transform_.position_.y >= GROUND)
+	{
+		transform_.position_.y = GROUND;
+		jumpSpeed = 0.0f;
 	}
 	
 	if (transform_.position_.y == 400)
 	{
 		KillMe();
 	}
+
 	--timer;
 }
 

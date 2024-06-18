@@ -15,4 +15,7 @@ public:
 private:
 	int hImage;
 	int timer;
+	bool prevSpaceKey;
+	float jumpSpeed;
+	bool onGround;
 };

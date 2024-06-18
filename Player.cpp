@@ -6,9 +6,11 @@
 namespace {
 	const float MOVE_SPEED = 0.5f;
 	const float GROUND = 400.0f;
+	const float JUMP_HEIGHT = 64.0f * 4.0f;
+	const float GRAVITY = 9.8f / 60.0f;
 }
 
-Player::Player(GameObject* parent) : GameObject(sceneTop)
+Player::Player(GameObject* parent) : GameObject(sceneTop),counter(0)
 {
 	hImage = LoadGraph("Assets/aoi.png");
 	assert(hImage > 0);
@@ -27,6 +29,7 @@ Player::~Player()
 
 void Player::Update()
 {
+	counter -= 1;
 	if (CheckHitKey(KEY_INPUT_D))
 	{
 		transform_.position_.x += MOVE_SPEED;
@@ -36,23 +39,39 @@ void Player::Update()
 		transform_.position_.x -= MOVE_SPEED;
 	}
 
-	if (CheckHitKey(KEY_INPUT_M))
+	if (counter <= 0)
 	{
-		Stone* st = Instantiate<Stone>(GetParent());
-		st->SetPosition(transform_.position_);
+		counter = 80;
+		if (CheckHitKey(KEY_INPUT_O))
+		{
+			Stone* st = Instantiate<Stone>(GetParent());
+			st->SetPosition(transform_.position_);
+		}
 	}
 
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
-		//ƒWƒƒƒ“ƒv
-		jumpSpeed = -1.0f;
+		if(prevSpaceKey == false)
+		{
+			if (onGround)
+			{
+				jumpSpeed = -sqrtf(2 * GRAVITY * JUMP_HEIGHT);
+				onGround = false;
+			}
+		}
+		prevSpaceKey = true;
 	}
-	jumpSpeed += 9.8f / 60.0f;
+	else
+	{
+		prevSpaceKey = false;
+	}
+	jumpSpeed += GRAVITY;
 	transform_.position_.y += jumpSpeed;
 	if (transform_.position_.y >= GROUND)
 	{
 		transform_.position_.y = GROUND;
 		jumpSpeed = 0.0f;
+		onGround = true;
 	}
 }
 

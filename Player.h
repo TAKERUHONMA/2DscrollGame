@@ -16,4 +16,6 @@ private:
 	GameObject* sceneTop;
 	bool prevSpaceKey;
 	float jumpSpeed;
+	bool onGround;
+	int counter;
 };
