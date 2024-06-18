@@ -33,15 +33,33 @@ void Player::Update()
 	if (CheckHitKey(KEY_INPUT_D))
 	{
 		transform_.position_.x += MOVE_SPEED;
+
+		if (++frameCounter >= 8)
+		{
+			animFrame = (animFrame + 1) % 4;
+			frameCounter = 0;
+		}
 	}
-	if (CheckHitKey(KEY_INPUT_A))
+	else if (CheckHitKey(KEY_INPUT_A))
 	{
 		transform_.position_.x -= MOVE_SPEED;
+
+		if (++frameCounter >= 8)
+		{
+			animFrame = (animFrame + 1) % 4;
+			frameCounter = 0;
+		}
 	}
+	else
+	{
+		animFrame = 0;
+		frameCounter = 0;
+	}
+	
 
 	if (counter <= 0)
 	{
-		counter = 80;
+		counter = 50;
 		if (CheckHitKey(KEY_INPUT_O))
 		{
 			Stone* st = Instantiate<Stone>(GetParent());
@@ -79,5 +97,5 @@ void Player::Draw()
 {
 	int x = (int)transform_.position_.x;
 	int y = (int)transform_.position_.y;
-	DrawRectGraph(x, y, 0, 0, 64, 64, hImage, TRUE);
+	DrawRectGraph(x, y, animFrame * 64, 0, 64, 64, hImage, TRUE);
 }

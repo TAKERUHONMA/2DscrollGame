@@ -18,4 +18,7 @@ private:
 	float jumpSpeed;
 	bool onGround;
 	int counter;
+	int animType; //タイプ
+	int animFrame; //コマ
+	int frameCounter;
 };
