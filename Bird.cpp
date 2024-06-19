@@ -1,5 +1,6 @@
 #include "Bird.h"
 #include <assert.h>
+#include "Camera.h"
 
 Bird::Bird(GameObject* scene)
 {
@@ -25,5 +26,10 @@ void Bird::Draw()
 {
 	int x = (int)transform_.position_.x;
 	int y = (int)transform_.position_.y;
+	Camera* cam = GetParent()->FindGameObject<Camera>();
+	if (cam != nullptr)
+	{
+		x -= cam->GetValue();
+	}
 	DrawRectGraph(x, y, 0, 0, 64, 64, hImage, TRUE);
 }

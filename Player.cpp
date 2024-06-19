@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include <assert.h>
 #include "Stone.h"
+#include "Camera.h"
 
 namespace {
 	const float MOVE_SPEED = 0.5f;
@@ -17,6 +18,8 @@ Player::Player(GameObject* parent) : GameObject(sceneTop),counter(0)
 	transform_.position_.x = 10.0f;
 	transform_.position_.y = GROUND;
 	jumpSpeed = 0.0f;
+	onGround = true;
+	
 }
 
 Player::~Player()
@@ -91,11 +94,25 @@ void Player::Update()
 		jumpSpeed = 0.0f;
 		onGround = true;
 	}
+
+	//ƒJƒƒ‰‚ÌˆÊ’u’²®
+	Camera* cam = GetParent()->FindGameObject<Camera>();
+	int x = (int)transform_.position_.x - cam->GetValue();
+	if (x > 400)
+	{
+		x = 400;
+		cam->SetValue((int)transform_.position_.x - x);
+	}
 }
 
 void Player::Draw()
 {
 	int x = (int)transform_.position_.x;
 	int y = (int)transform_.position_.y;
+	Camera* cam = GetParent()->FindGameObject<Camera>();
+	if (cam != nullptr)
+	{
+		x -= cam->GetValue();
+	}
 	DrawRectGraph(x, y, animFrame * 64, 0, 64, 64, hImage, TRUE);
 }

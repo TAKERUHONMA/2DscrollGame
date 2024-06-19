@@ -1,5 +1,6 @@
 #include "Stone.h"
 #include <assert.h>
+#include "Camera.h"
 
 namespace {
 	const float MOVE_SPEED = 0.5f;
@@ -26,12 +27,12 @@ void Stone::Update()
 {
 	if (timer <= 300)
 	{	
-		transform_.position_.x += 2.0f;
+		transform_.position_.x += 3.0f;
 		transform_.position_.y += sqrtf(2 * GRAVITY * JUMP_HEIGHT);
 	}
 	else
 	{
-		transform_.position_.x += 2.0f;
+		transform_.position_.x += 3.0f;
 		transform_.position_.y -= sqrtf(2 * GRAVITY * JUMP_HEIGHT);
 	}
 	jumpSpeed += GRAVITY;
@@ -54,6 +55,11 @@ void Stone::Draw()
 {
 	int x = (int)transform_.position_.x;
 	int y = (int)transform_.position_.y;
+	Camera* cam = GetParent()->FindGameObject<Camera>();
+	if (cam != nullptr)
+	{
+		x -= cam->GetValue();
+	}
 	DrawGraph(x, y, hImage, TRUE);
 }
 

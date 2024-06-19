@@ -21,4 +21,6 @@ private:
 	int animType; //タイプ
 	int animFrame; //コマ
 	int frameCounter;
+
+	//float cameraX; //カメラの位置
 };
