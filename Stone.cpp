@@ -1,6 +1,7 @@
 #include "Stone.h"
 #include <assert.h>
 #include "Camera.h"
+#include "Field.h"
 
 namespace {
 	const float MOVE_SPEED = 0.5f;
@@ -25,7 +26,7 @@ Stone::~Stone()
 
 void Stone::Update()
 {
-	if (timer <= 300)
+	if (timer <= 90)
 	{	
 		transform_.position_.x += 3.0f;
 		transform_.position_.y += sqrtf(2 * GRAVITY * JUMP_HEIGHT);
@@ -34,6 +35,15 @@ void Stone::Update()
 	{
 		transform_.position_.x += 3.0f;
 		transform_.position_.y -= sqrtf(2 * GRAVITY * JUMP_HEIGHT);
+
+		int hitX = transform_.position_.x + 50;
+		int hitY = transform_.position_.y + 63;
+		Field* pField = GetParent()->FindGameObject<Field>();
+		if (pField != nullptr)
+		{
+			int push = pField->CollisionRight(hitX, hitY);
+			transform_.position_.x -= push;
+		}
 	}
 	jumpSpeed += GRAVITY;
 	transform_.position_.y += jumpSpeed;
@@ -43,12 +53,10 @@ void Stone::Update()
 		jumpSpeed = 0.0f;
 	}
 	
-	if (transform_.position_.y == 400)
+	if (--timer <= 0)
 	{
 		KillMe();
 	}
-
-	--timer;
 }
 
 void Stone::Draw()
@@ -66,5 +74,5 @@ void Stone::Draw()
 void Stone::SetPosition(XMFLOAT3 pos)
 {
 	transform_.position_ = pos;
-	timer = 600;
+	timer = 180;
 }

@@ -3,6 +3,7 @@
 #include <assert.h>
 #include "Stone.h"
 #include "Camera.h"
+#include "Field.h"
 
 namespace {
 	const float MOVE_SPEED = 0.5f;
@@ -32,6 +33,8 @@ Player::~Player()
 
 void Player::Update()
 {
+	Field* pField = GetParent()->FindGameObject<Field>();
+
 	counter -= 1;
 	if (CheckHitKey(KEY_INPUT_D))
 	{
@@ -41,6 +44,13 @@ void Player::Update()
 		{
 			animFrame = (animFrame + 1) % 4;
 			frameCounter = 0;
+		}
+		int hitX = transform_.position_.x + 50;
+		int hitY = transform_.position_.y + 63;
+		if (pField != nullptr)
+		{
+			int push = pField->CollisionRight(hitX, hitY);
+			transform_.position_.x -= push;
 		}
 	}
 	else if (CheckHitKey(KEY_INPUT_A))
@@ -88,9 +98,11 @@ void Player::Update()
 	}
 	jumpSpeed += GRAVITY;
 	transform_.position_.y += jumpSpeed;
-	if (transform_.position_.y >= GROUND)
+
+	if (pField != nullptr)
 	{
-		transform_.position_.y = GROUND;
+		int push = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 63);
+		transform_.position_.y -= push;
 		jumpSpeed = 0.0f;
 		onGround = true;
 	}
@@ -115,4 +127,10 @@ void Player::Draw()
 		x -= cam->GetValue();
 	}
 	DrawRectGraph(x, y, animFrame * 64, 0, 64, 64, hImage, TRUE);
+}
+
+void Player::SetPosition(int x, int y)
+{
+	transform_.position_.x = x;
+	transform_.position_.y = y;
 }

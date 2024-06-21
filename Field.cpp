@@ -72,12 +72,51 @@ void Field::Draw()
 	}
 }
 
+int Field::CollisionRight(int x, int y)
+{
+	if (IsWallBlock(x, y))
+	{
+		//“–‚½‚Á‚Ä‚¢‚é‚Ì‚ÅA‚ß‚è‚ñ‚¾—Ê‚ğ•Ô‚·
+		return x % 32 + 1;
+	}
+	return 0;
+}
+
+int Field::CollisionDown(int x, int y)
+{
+	if (IsWallBlock(x, y))
+	{
+		//“–‚½‚Á‚Ä‚¢‚é‚Ì‚ÅA‚ß‚è‚ñ‚¾—Ê‚ğ•Ô‚·
+		return y % 32 + 1;
+	}
+	return 0;
+}
+
 void Field::Reset()
 {
-	CsvReader csv;
-	bool ret = csv.Load("Assets/stage1.csv");
-	assert(ret);
-	int width = csv.GetWidth();
-	int height = csv.GetHeight();
+	//CsvReader csv;
+	//bool ret = csv.Load("Assets/stage1.csv");
+	//assert(ret);
+	//int width = csv.GetWidth();
+	//int height = csv.GetHeight();
 
+}
+
+bool Field::IsWallBlock(int x, int y)
+{
+	int chipX = x / 32;
+	int chipY = y / 32;
+	switch (Map[chipY][chipX])
+	{
+	case 16:
+	case 17:
+	case 18:
+	case 19:
+	case 32:
+	case 33:
+	case 34:
+	case 35:
+		return true;
+	}
+	return false;
 }
