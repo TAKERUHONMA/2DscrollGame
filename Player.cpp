@@ -7,7 +7,7 @@
 
 namespace {
 	const float MOVE_SPEED = 0.5f;
-	const float GROUND = 400.0f;
+	const float GROUND = 600.0f;
 	const float JUMP_HEIGHT = 64.0f * 4.0f;
 	const float GRAVITY = 9.8f / 60.0f;
 }
@@ -34,6 +34,20 @@ Player::~Player()
 void Player::Update()
 {
 	Field* pField = GetParent()->FindGameObject<Field>();
+	Stone* st = Instantiate<Stone>(GetParent());
+
+	if (pField != nullptr)
+	{
+		int push = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 63);
+
+		if (push > 0)
+		{
+			transform_.position_.y -= push;
+			jumpSpeed = 0.0f;
+			onGround = true;
+		}
+
+	}
 
 	counter -= 1;
 	if (CheckHitKey(KEY_INPUT_D))
@@ -68,44 +82,37 @@ void Player::Update()
 		animFrame = 0;
 		frameCounter = 0;
 	}
-	
+
+	//if (CheckHitKey(KEY_INPUT_SPACE))
+	//{
+	//	if(prevSpaceKey == false)
+	//	{
+	//		if (onGround)
+	//		{
+	//			jumpSpeed = -sqrtf(2 * GRAVITY * JUMP_HEIGHT);
+	//			onGround = false;
+	//		}
+	//	}
+	//	prevSpaceKey = true;
+	//}
+	//else
+	//{
+	//	prevSpaceKey = false;
+	//}
+	jumpSpeed += GRAVITY;
+	transform_.position_.y += jumpSpeed;
+
 
 	if (counter <= 0)
 	{
 		counter = 50;
 		if (CheckHitKey(KEY_INPUT_O))
 		{
-			Stone* st = Instantiate<Stone>(GetParent());
-			st->SetPosition(transform_.position_);
+			st->SetPosition(transform_.position_.x, transform_.position_.y);
 		}
 	}
 
-	if (CheckHitKey(KEY_INPUT_SPACE))
-	{
-		if(prevSpaceKey == false)
-		{
-			if (onGround)
-			{
-				jumpSpeed = -sqrtf(2 * GRAVITY * JUMP_HEIGHT);
-				onGround = false;
-			}
-		}
-		prevSpaceKey = true;
-	}
-	else
-	{
-		prevSpaceKey = false;
-	}
-	jumpSpeed += GRAVITY;
-	transform_.position_.y += jumpSpeed;
 
-	if (pField != nullptr)
-	{
-		int push = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 63);
-		transform_.position_.y -= push;
-		jumpSpeed = 0.0f;
-		onGround = true;
-	}
 
 	//ƒJƒƒ‰‚ÌˆÊ’u’²®
 	Camera* cam = GetParent()->FindGameObject<Camera>();
