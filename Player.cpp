@@ -110,7 +110,7 @@ void Player::Update()
 	{
 		if (counter <= 0)
 		{
-			counter = 100;
+			counter = 160;
 			st->SetPosition(transform_.position_.x, transform_.position_.y);
 		}
 	}
