@@ -8,7 +8,7 @@
 
 namespace {
 	const float MOVE_SPEED = 0.5f;
-	const float GROUND = 500.0f;
+	const float GROUND = 600.0f;
 	const float JUMP_HEIGHT = 64.0f * 4.0f;
 	const float GRAVITY = 9.8f / 60.0f;
 }
