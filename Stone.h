@@ -12,8 +12,6 @@ public:
 	void Update() override;
 	void Draw() override;
 	void SetPosition(int x,int y);
-	void SetPositionY(int y) { transform_.position_.y = y; }
-	int GetPositionY() { return transform_.position_.y; }
 private:
 	int hImage;
 	int timer;

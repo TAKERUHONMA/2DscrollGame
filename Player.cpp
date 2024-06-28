@@ -4,7 +4,6 @@
 #include "Stone.h"
 #include "Camera.h"
 #include "Field.h"
-#include "Bird.h"
 
 namespace {
 	const float MOVE_SPEED = 0.5f;
@@ -39,9 +38,8 @@ void Player::Update()
 
 	if (pField != nullptr)
 	{
-		int pushR = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 64);
-		int pushL = pField->CollisionDown(transform_.position_.x + 14, transform_.position_.y + 64);
-		int push = max(pushR, pushL);
+		int push = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 63);
+
 		if (push > 0)
 		{
 			transform_.position_.y -= push;
@@ -68,7 +66,6 @@ void Player::Update()
 			int push = pField->CollisionRight(hitX, hitY);
 			transform_.position_.x -= push;
 		}
-
 	}
 	else if (CheckHitKey(KEY_INPUT_A))
 	{
@@ -102,27 +99,20 @@ void Player::Update()
 	//{
 	//	prevSpaceKey = false;
 	//}
-
 	jumpSpeed += GRAVITY;
 	transform_.position_.y += jumpSpeed;
 
-	if (CheckHitKey(KEY_INPUT_O))
+
+	if (counter <= 0)
 	{
-		if (counter <= 0)
+		counter = 50;
+		if (CheckHitKey(KEY_INPUT_O))
 		{
-			counter = 160;
 			st->SetPosition(transform_.position_.x, transform_.position_.y);
 		}
 	}
 
-	Bird* pBird = GetParent()->FindGameObject<Bird>();
-	if (pBird != nullptr)
-	{
-		if (pBird->CollideCircle(transform_.position_.x + 32.0f, transform_.position_.y + 32.0f, 20.0f))
-		{
-			transform_.position_.y = 0;
-		}
-	}
+
 
 	//ƒJƒƒ‰‚ÌˆÊ’u’²®
 	Camera* cam = GetParent()->FindGameObject<Camera>();
