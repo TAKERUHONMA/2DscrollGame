@@ -11,6 +11,9 @@ public:
 	~Bird();
 	void Update() override;
 	void Draw() override;
+
+	//‰~‚Ì“–‚½‚è”»’è‚ð‚·‚é
+	bool CollideCircle(float x, float y, float r);
 private:
 	int hImage;
 };

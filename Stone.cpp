@@ -2,11 +2,12 @@
 #include <assert.h>
 #include "Camera.h"
 #include "Field.h"
+#include "Player.h"
 
 namespace {
 	const float MOVE_SPEED = 0.5f;
 	const float GROUND = 400.0f;
-	const float JUMP_HEIGHT = 64.0f * 4.0f;
+	const float JUMP_HEIGHT = 64.0f * 2.0f;
 	const float GRAVITY = 9.8f / 60.0f;
 }
 
@@ -26,33 +27,90 @@ Stone::~Stone()
 
 void Stone::Update()
 {
-	if (timer <= 90)
-	{	
-		transform_.position_.x += 3.0f;
-		transform_.position_.y += sqrtf(2 * GRAVITY * JUMP_HEIGHT);
+	Field* pField = GetParent()->FindGameObject<Field>();
+
+	if (pField != nullptr)
+	{
+		int pushR = pField->CollisionDown(transform_.position_.x + 5, transform_.position_.y + 20);
+		int pushL = pField->CollisionDown(transform_.position_.x + 14, transform_.position_.y + 20);
+		int push = max(pushR, pushL);
+		if (push > 0)
+		{
+			transform_.position_.y -= push - 1;
+			jumpSpeed = 0.0f;
+			onGround = true;
+		}
 	}
-	else
+
+	//int hitX = transform_.position_.x;
+	//int hitY = transform_.position_.y;
+	//if (pField != nullptr)
+	//{
+	//	int push = pField->CollisionRight(hitX, hitY);
+	//	transform_.position_.x += push;
+	//}
+
+	//if (prevSpaceKey)
+	//{	
+	//	//transform_.position_.x = hitX;
+	//	//transform_.position_.y = hitY;
+	//	//SetPosition(transform_.position_.x, transform_.position_.y);
+	//	//if (prevSpaceKey == false)
+	//	//{
+	//		//if (onGround)
+	//		//{
+	//		//	transform_.position_.x += 3.0f;
+	//		//	jumpSpeed = -sqrtf(2 * GRAVITY * JUMP_HEIGHT);
+	//		//	onGround = false;
+	//		//}
+	//	//}
+	//	//prevSpaceKey = true;
+	//}
+	//else
+	//{
+	//	/*transform_.position_.x += 3.0f;
+	//	transform_.position_.y -= sqrtf(2 * GRAVITY * JUMP_HEIGHT);*/
+	//	//if (pField != nullptr)
+	//	//{
+	//	//	int push = pField->CollisionDown(transform_.position_.x, transform_.position_.y);
+	//	//	if (push > 0)
+	//	//	{
+	//	//		transform_.position_.y -= push;
+	//	//		jumpSpeed = 0.0f;
+	//	//		onGround = true;
+	//	//	}
+	//	//	//if (push)
+	//	//	//{
+	//	//	//	Player* pPlayer = GetParent()->FindGameObject<Player>();
+	//	//	//	pPlayer->SetPosition(transform_.position_.x, transform_.position_.y);
+	//	//	//}
+	//	//}
+	//}
+
+	if (onGround == false)
 	{
 		transform_.position_.x += 3.0f;
 		transform_.position_.y -= sqrtf(2 * GRAVITY * JUMP_HEIGHT);
 
-		int hitX = transform_.position_.x + 50;
-		int hitY = transform_.position_.y + 63;
-		Field* pField = GetParent()->FindGameObject<Field>();
-		if (pField != nullptr)
-		{
-			int push = pField->CollisionRight(hitX, hitY);
-			transform_.position_.x -= push;
-		}
+		//int hitX = transform_.position_.x;
+		//int hitY = transform_.position_.y;
+		//if (pField != nullptr)
+		//{
+		//	int push = pField->CollisionRight(hitX, hitY);
+		//	transform_.position_.x -= push;
+		//}
 	}
-	jumpSpeed += GRAVITY;
-	transform_.position_.y += jumpSpeed;
-	if (transform_.position_.y >= GROUND)
+
+	if (timer == 2)
 	{
-		transform_.position_.y = GROUND;
-		jumpSpeed = 0.0f;
+		Player* pPlayer = GetParent()->FindGameObject<Player>();
+		pPlayer->SetPosition(transform_.position_.x, transform_.position_.y);
 	}
 	
+	jumpSpeed += GRAVITY;
+	transform_.position_.y += jumpSpeed;
+	
+
 	if (--timer <= 0)
 	{
 		KillMe();
@@ -71,8 +129,10 @@ void Stone::Draw()
 	DrawGraph(x, y, hImage, TRUE);
 }
 
-void Stone::SetPosition(XMFLOAT3 pos)
+
+void Stone::SetPosition(int x,int y)
 {
-	transform_.position_ = pos;
-	timer = 180;
+	transform_.position_.x = x;
+	transform_.position_.y = y;
+	timer = 150;
 }

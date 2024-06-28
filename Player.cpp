@@ -4,10 +4,11 @@
 #include "Stone.h"
 #include "Camera.h"
 #include "Field.h"
+#include "Bird.h"
 
 namespace {
 	const float MOVE_SPEED = 0.5f;
-	const float GROUND = 400.0f;
+	const float GROUND = 500.0f;
 	const float JUMP_HEIGHT = 64.0f * 4.0f;
 	const float GRAVITY = 9.8f / 60.0f;
 }
@@ -34,6 +35,21 @@ Player::~Player()
 void Player::Update()
 {
 	Field* pField = GetParent()->FindGameObject<Field>();
+	Stone* st = Instantiate<Stone>(GetParent());
+
+	if (pField != nullptr)
+	{
+		int pushR = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 64);
+		int pushL = pField->CollisionDown(transform_.position_.x + 14, transform_.position_.y + 64);
+		int push = max(pushR, pushL);
+		if (push > 0)
+		{
+			transform_.position_.y -= push;
+			jumpSpeed = 0.0f;
+			onGround = true;
+		}
+
+	}
 
 	counter -= 1;
 	if (CheckHitKey(KEY_INPUT_D))
@@ -52,6 +68,7 @@ void Player::Update()
 			int push = pField->CollisionRight(hitX, hitY);
 			transform_.position_.x -= push;
 		}
+
 	}
 	else if (CheckHitKey(KEY_INPUT_A))
 	{
@@ -68,43 +85,43 @@ void Player::Update()
 		animFrame = 0;
 		frameCounter = 0;
 	}
-	
 
-	if (counter <= 0)
-	{
-		counter = 50;
-		if (CheckHitKey(KEY_INPUT_O))
-		{
-			Stone* st = Instantiate<Stone>(GetParent());
-			st->SetPosition(transform_.position_);
-		}
-	}
+	//if (CheckHitKey(KEY_INPUT_SPACE))
+	//{
+	//	if(prevSpaceKey == false)
+	//	{
+	//		if (onGround)
+	//		{
+	//			jumpSpeed = -sqrtf(2 * GRAVITY * JUMP_HEIGHT);
+	//			onGround = false;
+	//		}
+	//	}
+	//	prevSpaceKey = true;
+	//}
+	//else
+	//{
+	//	prevSpaceKey = false;
+	//}
 
-	if (CheckHitKey(KEY_INPUT_SPACE))
-	{
-		if(prevSpaceKey == false)
-		{
-			if (onGround)
-			{
-				jumpSpeed = -sqrtf(2 * GRAVITY * JUMP_HEIGHT);
-				onGround = false;
-			}
-		}
-		prevSpaceKey = true;
-	}
-	else
-	{
-		prevSpaceKey = false;
-	}
 	jumpSpeed += GRAVITY;
 	transform_.position_.y += jumpSpeed;
 
-	if (pField != nullptr)
+	if (CheckHitKey(KEY_INPUT_O))
 	{
-		int push = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 63);
-		transform_.position_.y -= push;
-		jumpSpeed = 0.0f;
-		onGround = true;
+		if (counter <= 0)
+		{
+			counter = 100;
+			st->SetPosition(transform_.position_.x, transform_.position_.y);
+		}
+	}
+
+	Bird* pBird = GetParent()->FindGameObject<Bird>();
+	if (pBird != nullptr)
+	{
+		if (pBird->CollideCircle(transform_.position_.x + 32.0f, transform_.position_.y + 32.0f, 20.0f))
+		{
+			transform_.position_.y = 0;
+		}
 	}
 
 	//ÉJÉÅÉâÇÃà íuí≤êÆ
