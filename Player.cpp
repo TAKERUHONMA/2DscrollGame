@@ -76,6 +76,13 @@ void Player::Update()
 			animFrame = (animFrame + 1) % 4;
 			frameCounter = 0;
 		}
+		int hitX = transform_.position_.x + 50;
+		int hitY = transform_.position_.y + 63;
+		if (pField != nullptr)
+		{
+			int push = pField->CollisionRight(hitX, hitY);
+			transform_.position_.x -= push;
+		}
 	}
 	else
 	{
@@ -83,31 +90,30 @@ void Player::Update()
 		frameCounter = 0;
 	}
 
-	//if (CheckHitKey(KEY_INPUT_SPACE))
-	//{
-	//	if(prevSpaceKey == false)
-	//	{
-	//		if (onGround)
-	//		{
-	//			jumpSpeed = -sqrtf(2 * GRAVITY * JUMP_HEIGHT);
-	//			onGround = false;
-	//		}
-	//	}
-	//	prevSpaceKey = true;
-	//}
-	//else
-	//{
-	//	prevSpaceKey = false;
-	//}
+	if (CheckHitKey(KEY_INPUT_SPACE))
+	{
+		if(prevSpaceKey == false)
+		{
+			if (onGround)
+			{
+				jumpSpeed = -sqrtf(2 * GRAVITY * JUMP_HEIGHT);
+				onGround = false;
+			}
+		}
+		prevSpaceKey = true;
+	}
+	else
+	{
+		prevSpaceKey = false;
+	}
 	jumpSpeed += GRAVITY;
 	transform_.position_.y += jumpSpeed;
 
-
-	if (counter <= 0)
+	if (CheckHitKey(KEY_INPUT_O))
 	{
-		counter = 50;
-		if (CheckHitKey(KEY_INPUT_O))
+		if (counter <= 0)
 		{
+			counter = 160;
 			st->SetPosition(transform_.position_.x, transform_.position_.y);
 		}
 	}
@@ -121,6 +127,10 @@ void Player::Update()
 	{
 		x = 400;
 		cam->SetValue((int)transform_.position_.x - x);
+	}
+	else if(x <=0)
+	{
+		cam->SetValue((int)transform_.position_.x);
 	}
 }
 

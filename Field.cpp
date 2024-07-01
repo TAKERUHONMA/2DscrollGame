@@ -92,6 +92,24 @@ int Field::CollisionDown(int x, int y)
 	return 0;
 }
 
+int Field::CollisionUp(int x, int y)
+{
+	if (IsWallBlock(x, y))
+	{
+		return y % 32 - 1;
+	}
+	return 0;
+}
+
+int Field::CollisionLeft(int x, int y)
+{
+	if (IsWallBlock(x, y))
+	{
+		return x % 32 - 1;
+	}
+	return 0;
+}
+
 void Field::Reset()
 {
 	//CsvReader csv;
