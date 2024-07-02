@@ -9,6 +9,7 @@ class Field : public GameObject
 public:
 	Field(GameObject* scene);
 	~Field();
+	void Reset();
 	void Update() override;
 	void Draw() override;
 
@@ -43,10 +44,11 @@ public:
 	/// <param name="y">Yç¿ïW</param>
 	/// <returns></returns>
 	int CollisionLeft(int x, int y);
-
-	void Reset();
 private:
 	int hImage;
 
 	bool IsWallBlock(int x, int y);
+	//int* Map;
+	int width;
+	int height;
 };

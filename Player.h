@@ -11,6 +11,12 @@ public:
 	~Player();
 	void Update() override;
 	void Draw() override;
+
+	/// <summary>
+	/// プレイヤーの座標をセット
+	/// </summary>
+	/// <param name="x">X座標</param>
+	/// <param name="y">Y座標</param>
 	void SetPosition(int x, int y);
 	//void GetPosition(int x, int y) { transform_.position_.x = x, transform_.position_.y = y; }
 private:

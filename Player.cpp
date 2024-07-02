@@ -36,17 +36,22 @@ void Player::Update()
 	Field* pField = GetParent()->FindGameObject<Field>();
 	Stone* st = Instantiate<Stone>(GetParent());
 
-	if (pField != nullptr)
+	if (pField != nullptr) 
 	{
-		int push = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 63);
-
-		if (push > 0)
+		//(50,64)‚Æ(14,64)‚àŒ©‚é
+		int pushR = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 64);
+		int pushL = pField->CollisionDown(transform_.position_.x + 14, transform_.position_.y + 64);
+		int push = max(pushR, pushL);//‚Q‚Â‚Ì‘«Œ³‚Ì‚ß‚èž‚Ý‚Ì‘å‚«‚¢•û
+		if (push >= 1) 
 		{
-			transform_.position_.y -= push;
+			transform_.position_.y -= push - 1;
 			jumpSpeed = 0.0f;
 			onGround = true;
 		}
-
+		else 
+		{
+			onGround = false;
+		}
 	}
 
 	counter -= 1;
@@ -61,7 +66,7 @@ void Player::Update()
 		}
 		int hitX = transform_.position_.x + 50;
 		int hitY = transform_.position_.y + 63;
-		if (pField != nullptr)
+		if (pField != nullptr) 
 		{
 			int push = pField->CollisionRight(hitX, hitY);
 			transform_.position_.x -= push;
@@ -76,12 +81,12 @@ void Player::Update()
 			animFrame = (animFrame + 1) % 4;
 			frameCounter = 0;
 		}
-		int hitX = transform_.position_.x + 50;
-		int hitY = transform_.position_.y + 63;
+		int hitX = transform_.position_.x - 50;
+		int hitY = transform_.position_.y - 63;
 		if (pField != nullptr)
 		{
-			int push = pField->CollisionRight(hitX, hitY);
-			transform_.position_.x -= push;
+			int push = pField->CollisionLeft(hitX, hitY);
+			transform_.position_.x += push;
 		}
 	}
 	else
@@ -90,22 +95,22 @@ void Player::Update()
 		frameCounter = 0;
 	}
 
-	if (CheckHitKey(KEY_INPUT_SPACE))
-	{
-		if(prevSpaceKey == false)
-		{
-			if (onGround)
-			{
-				jumpSpeed = -sqrtf(2 * GRAVITY * JUMP_HEIGHT);
-				onGround = false;
-			}
-		}
-		prevSpaceKey = true;
-	}
-	else
-	{
-		prevSpaceKey = false;
-	}
+	//if (CheckHitKey(KEY_INPUT_SPACE))
+	//{
+	//	if(prevSpaceKey == false)
+	//	{
+	//		if (onGround)
+	//		{
+	//			jumpSpeed = -sqrtf(2 * GRAVITY * JUMP_HEIGHT);
+	//			onGround = false;
+	//		}
+	//	}
+	//	prevSpaceKey = true;
+	//}
+	//else
+	//{
+	//	prevSpaceKey = false;
+	//}
 	jumpSpeed += GRAVITY;
 	transform_.position_.y += jumpSpeed;
 

@@ -35,6 +35,13 @@ void Bird::Draw()
 	DrawCircle(x + 32.0f, y + 32.0f, 24.0f, GetColor(255, 0, 0));
 }
 
+void Bird::SetPosition(int x, int y)
+{
+	transform_.position_.x = x;
+	transform_.position_.y = y;
+	daseY = y;
+}
+
 bool Bird::CollideCircle(float x, float y, float r)
 {
 	//x, y, r ‚ª‘Šè‚Ì‰~‚Ìî•ñ
@@ -47,6 +54,5 @@ bool Bird::CollideCircle(float x, float y, float r)
 
 	if (dx * dx * dy * dy < (r + myR) * (r + myR))
 		return true;
-
 	return false;
 }

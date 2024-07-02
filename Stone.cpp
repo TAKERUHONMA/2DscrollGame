@@ -31,16 +31,18 @@ void Stone::Update()
 
 	if (pField != nullptr)
 	{
-		int push = pField->CollisionDown(transform_.position_.x + 5, transform_.position_.y + 20);
+		int push = pField->CollisionDown(transform_.position_.x + 17, transform_.position_.y + 20);
 
-		if (push > 0)
+		if (push > 1)
 		{
 			transform_.position_.y -= push;
+			transform_.position_.x -= push -2;
 			jumpSpeed = 0.0f;
 			onGround = true;
 		}
 
 	}
+
 
 	if (onGround == false)
 	{
@@ -59,14 +61,13 @@ void Stone::Update()
 			}
 
 		}
-
 	}
 
-	//if (timer == 2)
-	//{
-	//	Player* pPlayer = GetParent()->FindGameObject<Player>();
-	//	pPlayer->SetPosition(transform_.position_.x, transform_.position_.y);
-	//}
+	if (timer == 2)
+	{
+		Player* pPlayer = GetParent()->FindGameObject<Player>();
+		pPlayer->SetPosition(transform_.position_.x, transform_.position_.y-20);
+	}
 
 	jumpSpeed += GRAVITY;
 	transform_.position_.y += jumpSpeed;
