@@ -11,7 +11,7 @@ public:
 	~Stone();
 	void Update() override;
 	void Draw() override;
-	void SetPosition(int x,int y);
+	void SetPosition(XMFLOAT3 pos);
 private:
 	int hImage;
 	int timer;
