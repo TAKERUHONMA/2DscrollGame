@@ -39,6 +39,7 @@
     <ClCompile Include="Stone.cpp" />
     <ClCompile Include="Bird.cpp" />
     <ClCompile Include="Field.cpp" />
+    <ClCompile Include="Banner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\GameObject.h">
@@ -65,5 +66,7 @@
     <ClInclude Include="Bird.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Banner.h" />
+    <ClInclude Include="Ease.h" />
   </ItemGroup>
 </Project>
