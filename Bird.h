@@ -22,6 +22,10 @@ public:
 	//‰~‚Ì“–‚½‚è”»’è‚ğ‚·‚é
 	bool CollideCircle(float x, float y, float r);
 private:
+	bool prevSpaceKey;
+	float jumpSpeed;
+	int counter;
+	bool onGround;
 	float sinAngle;
 	int hImage;
 	float baseY;//¶¬‚ÌYÀ•W

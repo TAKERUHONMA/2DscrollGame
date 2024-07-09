@@ -11,7 +11,9 @@ Field::Field(GameObject* scene)
 	:GameObject(scene)
 {
 	hImage = LoadGraph("Assets/bgchar.png");
+	background = LoadGraph("Assets/bg2.png");
 	assert(hImage > 0);
+	assert(background > 0);
 	Map = nullptr;
 }
 
@@ -78,14 +80,19 @@ void Field::Update()
 
 void Field::Draw()
 {
+	DrawGraph(0,0, background, TRUE);
+
 	int scroll = 0;
 	Camera* cam = GetParent()->FindGameObject<Camera>();
-	if (cam != nullptr) {
+	if (cam != nullptr) 
+	{
 		scroll = cam->GetValue();
 	}
 
-	for (int y = 0; y < height; y++) {
-		for (int x = 0; x < width; x++) {
+	for (int y = 0; y < height; y++) 
+	{
+		for (int x = 0; x < width; x++) 
+		{
 			int chip = Map[y*width+x];
 			DrawRectGraph(x*32-scroll, y*32, 32 * (chip % 16), 32 * (chip / 16), 32, 32, hImage, TRUE);
 		}
@@ -102,17 +109,27 @@ int Field::CollisionRight(int x, int y)
 		return 0;
 }
 
-int Field::CollisionLight(int x, int y)
+int Field::CollisionLeft(int x, int y)
 {
 	if (IsWallBlock(x, y)) {
 		//“–‚½‚Á‚Ä‚¢‚é‚Ì‚ÅA‚ß‚èž‚ñ‚¾—Ê‚ð•Ô‚·
-		return x % 32 + 1;
+		return x % 32 - 1;
 	}
 	else
 		return 0;
 }
 
 int Field::CollisionDown(int x, int y)
+{
+	if (IsWallBlock(x, y)) {
+		//“–‚½‚Á‚Ä‚¢‚é‚Ì‚ÅA‚ß‚èž‚ñ‚¾—Ê‚ð•Ô‚·
+		return y % 32 + 1;
+	}
+	else
+		return 0;
+}
+
+int Field::CollisionUp(int x, int y)
 {
 	if (IsWallBlock(x, y)) {
 		//“–‚½‚Á‚Ä‚¢‚é‚Ì‚ÅA‚ß‚èž‚ñ‚¾—Ê‚ð•Ô‚·

@@ -8,14 +8,15 @@
 #include "TestScene.h"
 
 namespace {
-	const float MOVE_SPEED = 4.0f;
+	const float MOVE_SPEED = 1.5f;
 	const float GROUND = 400.0f;
 	const float JUMP_HEIGHT = 64.0f * 4.0f;//ジャンプの高さ
 	const float GRAVITY = 9.8f /60.0f;//重力加速度
+	const int MAX_STONE = 10; //小石を投げれる最大数
 	//const float INITIALVELOCITY = 18.0f;
 
 }
-Player::Player(GameObject* parent) : GameObject(sceneTop), counter(0)
+Player::Player(GameObject* parent) : GameObject(sceneTop), counter(0),count(0)
 {
 	hImage = LoadGraph("Assets/aoi.png");
 	assert(hImage > 0);
@@ -80,6 +81,13 @@ void Player::Update()
 			animFrame = (animFrame + 1) % 4;
 			frameCounter = 0;
 		}
+		int hitX = transform_.position_.x;
+		int hitY = transform_.position_.y;
+		if (pField != nullptr)
+		{
+			int push = pField->CollisionLeft(hitX, hitY);
+			transform_.position_.x += push;
+		}
 	}
 	else 
 	{
@@ -138,12 +146,23 @@ void Player::Update()
 		}
 	}*/
 
-	if (CheckHitKey(KEY_INPUT_O)) 
+	if (count == MAX_STONE)
 	{
-		if (counter <= 0)
+
+	}
+	else
+	{
+		if (CheckHitKey(KEY_INPUT_O))
 		{
-			counter = 160;
-			st->SetPosition(transform_.position_);
+			if (counter <= 0)
+			{
+				counter = 160;
+				if (counter == 160)
+				{
+					count += 1;
+				}
+				st->SetPosition(transform_.position_);
+			}
 		}
 	}
 	
