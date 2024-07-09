@@ -24,5 +24,5 @@ public:
 private:
 	float sinAngle;
 	int hImage;
-	float daseY; //¶¬‚ÌYÀ•W
+	float baseY;//¶¬‚ÌYÀ•W
 };

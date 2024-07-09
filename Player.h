@@ -13,12 +13,11 @@ public:
 	void Draw() override;
 
 	/// <summary>
-	/// プレイヤーの座標をセット
+	/// プレイヤーの座標をセットする
 	/// </summary>
 	/// <param name="x">X座標</param>
 	/// <param name="y">Y座標</param>
 	void SetPosition(int x, int y);
-	//void GetPosition(int x, int y) { transform_.position_.x = x, transform_.position_.y = y; }
 private:
 	int hImage;
 	GameObject* sceneTop;
@@ -26,9 +25,13 @@ private:
 	float jumpSpeed;
 	bool onGround;
 	int counter;
-	int animType; //タイプ
-	int animFrame; //コマ
+	int animType; //状況
+	int animFrame;//コマ
 	int frameCounter;
 
-	//float cameraX; //カメラの位置
+	enum State {
+		S_Walk=0,
+		S_Cry,
+	};
+	State state;
 };

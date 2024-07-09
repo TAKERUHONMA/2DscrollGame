@@ -1,8 +1,8 @@
 #include "Stone.h"
 #include <assert.h>
 #include "Camera.h"
-#include "Field.h"
 #include "Player.h"
+#include "Field.h"
 
 namespace {
 	const float MOVE_SPEED = 0.5f;
@@ -27,6 +27,7 @@ Stone::~Stone()
 
 void Stone::Update()
 {
+
 	Field* pField = GetParent()->FindGameObject<Field>();
 
 	if (pField != nullptr)
@@ -36,13 +37,11 @@ void Stone::Update()
 		if (push > 1)
 		{
 			transform_.position_.y -= push;
-			transform_.position_.x -= push -2;
+			transform_.position_.x -= push - 2;
 			jumpSpeed = 0.0f;
 			onGround = true;
 		}
-
 	}
-
 
 	if (onGround == false)
 	{
@@ -51,7 +50,7 @@ void Stone::Update()
 
 		if (pField != nullptr)
 		{
-			int push = pField->CollisionUp(transform_.position_.x + 5, transform_.position_.y + 20);
+			int push = pField->CollisionDown(transform_.position_.x + 5, transform_.position_.y + 20);
 
 			if (push > 0)
 			{
@@ -66,13 +65,12 @@ void Stone::Update()
 	if (timer == 2)
 	{
 		Player* pPlayer = GetParent()->FindGameObject<Player>();
-		pPlayer->SetPosition(transform_.position_.x, transform_.position_.y-20);
+		pPlayer->SetPosition(transform_.position_.x, transform_.position_.y - 20);
 	}
 
 	jumpSpeed += GRAVITY;
 	transform_.position_.y += jumpSpeed;
 
-	
 	if (--timer <= 0)
 	{
 		KillMe();
@@ -84,16 +82,14 @@ void Stone::Draw()
 	int x = (int)transform_.position_.x;
 	int y = (int)transform_.position_.y;
 	Camera* cam = GetParent()->FindGameObject<Camera>();
-	if (cam != nullptr)
-	{
+	if (cam != nullptr) {
 		x -= cam->GetValue();
 	}
 	DrawGraph(x, y, hImage, TRUE);
 }
 
-void Stone::SetPosition(int x, int y)
+void Stone::SetPosition(XMFLOAT3 pos)
 {
-	transform_.position_.x = x;
-	transform_.position_.y = y;
+	transform_.position_ = pos;
 	timer = 150;
 }
