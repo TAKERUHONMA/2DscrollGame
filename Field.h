@@ -47,6 +47,7 @@ public:
 private:
 	int hImage;
 	int background;
+	int stone;
 
 	bool IsWallBlock(int x, int y);
 	int* Map;

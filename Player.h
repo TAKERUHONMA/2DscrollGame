@@ -20,6 +20,8 @@ public:
 	void SetPosition(int x, int y);
 private:
 	int hImage;
+	int kazu;
+
 	GameObject* sceneTop;
 	bool prevSpaceKey;
 	float jumpSpeed;

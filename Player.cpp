@@ -12,13 +12,15 @@ namespace {
 	const float GROUND = 400.0f;
 	const float JUMP_HEIGHT = 64.0f * 4.0f;//ジャンプの高さ
 	const float GRAVITY = 9.8f /60.0f;//重力加速度
-	const int MAX_STONE = 10; //小石を投げれる最大数
+	const int MAX_STONE = 9; //小石を投げれる最大数
+	int STONE_NUMBER = 576;
 	//const float INITIALVELOCITY = 18.0f;
 
 }
 Player::Player(GameObject* parent) : GameObject(sceneTop), counter(0),count(0)
 {
 	hImage = LoadGraph("Assets/aoi.png");
+	kazu = LoadGraph("Assets/hankaku.png");
 	assert(hImage > 0);
 	transform_.position_.x = 10.0f;
 	transform_.position_.y = GROUND;
@@ -160,6 +162,7 @@ void Player::Update()
 				if (counter == 160)
 				{
 					count += 1;
+					STONE_NUMBER -= 64;
 				}
 				st->SetPosition(transform_.position_);
 			}
@@ -195,6 +198,8 @@ void Player::Update()
 
 void Player::Draw()
 {
+	DrawRectGraph(170, 0, 0, STONE_NUMBER, 64, 64, kazu, TRUE);
+
 	int x = (int)transform_.position_.x;
 	int y = (int)transform_.position_.y;
 	Camera* cam = GetParent()->FindGameObject<Camera>();

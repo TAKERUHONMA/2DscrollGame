@@ -12,6 +12,7 @@ Field::Field(GameObject* scene)
 {
 	hImage = LoadGraph("Assets/bgchar.png");
 	background = LoadGraph("Assets/bg2.png");
+	stone = LoadGraph("Assets/isi.png");
 	assert(hImage > 0);
 	assert(background > 0);
 	Map = nullptr;
@@ -81,6 +82,8 @@ void Field::Update()
 void Field::Draw()
 {
 	DrawGraph(0,0, background, TRUE);
+
+	DrawGraph(0, 0, stone, TRUE);
 
 	int scroll = 0;
 	Camera* cam = GetParent()->FindGameObject<Camera>();
