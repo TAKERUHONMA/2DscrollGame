@@ -8,7 +8,7 @@
 #include "TestScene.h"
 
 namespace {
-	const float MOVE_SPEED = 1.5f;
+	const float MOVE_SPEED = 2.0f;
 	const float GROUND = 400.0f;
 	const float JUMP_HEIGHT = 64.0f * 4.0f;//ジャンプの高さ
 	const float GRAVITY = 9.8f /60.0f;//重力加速度
@@ -96,21 +96,28 @@ void Player::Update()
 		animFrame = 0;
 		frameCounter = 0;
 	}
-	if (CheckHitKey(KEY_INPUT_SPACE)) {
-		if (prevSpaceKey == false) {
-			if (onGround) {
-				jumpSpeed = -sqrtf(2 * (GRAVITY)*JUMP_HEIGHT);
-				onGround = false;
-			}
-		}
-		prevSpaceKey = true;
-	}
-	else {
-		prevSpaceKey = false;
-	}
+
+	//if (CheckHitKey(KEY_INPUT_SPACE)) 
+	//{
+	//	if (prevSpaceKey == false) 
+	//	{
+	//		if (onGround) {
+	//			jumpSpeed = -sqrtf(2 * (GRAVITY)*JUMP_HEIGHT);
+	//			onGround = false;
+	//		}
+	//	}
+	//	prevSpaceKey = true;
+	//}
+	//else
+	//{
+	//	prevSpaceKey = false;
+	//}
+
 	jumpSpeed += GRAVITY;//速度 += 加速度
 	transform_.position_.y += jumpSpeed; //座標 += 速度
-	if (pField != nullptr) {
+
+	if (pField != nullptr) 
+	{
 		//(50,64)と(14,64)も見る
 		int pushR = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 64);
 		int pushL = pField->CollisionDown(transform_.position_.x + 14, transform_.position_.y + 64);
