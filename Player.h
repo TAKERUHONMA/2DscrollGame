@@ -18,6 +18,8 @@ public:
 	/// <param name="x">X座標</param>
 	/// <param name="y">Y座標</param>
 	void SetPosition(int x, int y);
+
+	void Reset();
 private:
 	int hImage;
 	int kazu;
@@ -31,6 +33,7 @@ private:
 	int animType; //状況
 	int animFrame;//コマ
 	int frameCounter;
+	float transparency;//透明度
 
 	enum State {
 		S_Walk=0,

@@ -30,6 +30,7 @@ Player::Player(GameObject* parent) : GameObject(sceneTop), counter(0),count(0)
 	animFrame = 0;
 	frameCounter = 0;
 	state = S_Walk;
+	transparency = 0;
 }
 
 Player::~Player()
@@ -226,6 +227,18 @@ void Player::Update()
 	{
 		KillMe();
 	}
+
+	if (CheckHitKey(KEY_INPUT_R))
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, transparency);
+		Reset();
+	}
+	else
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, transparency + 500);
+	}
+
+		
 }
 
 void Player::Draw()
@@ -246,4 +259,11 @@ void Player::SetPosition(int x, int y)
 {
 	transform_.position_.x = x;
 	transform_.position_.y = y;
+}
+
+void Player::Reset()
+{
+	count = 0;
+	STONE_NUMBER = 576;
+	DrawRectGraph(170, 0, 0, STONE_NUMBER, 64, 64, kazu, TRUE);
 }
