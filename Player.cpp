@@ -69,8 +69,7 @@ void Player::Update()
 		}
 		int hitX = transform_.position_.x + 50;
 		int hitY = transform_.position_.y + 63;
-		if (pField != nullptr) 
-		{
+		if (pField != nullptr) {
 			int push = pField->CollisionRight(hitX, hitY);
 			transform_.position_.x -= push;
 		}
@@ -95,6 +94,34 @@ void Player::Update()
 	{
 		animFrame = 0;
 		frameCounter = 0;
+	}
+	if (CheckHitKey(KEY_INPUT_SPACE)) {
+		if (prevSpaceKey == false) {
+			if (onGround) {
+				jumpSpeed = -sqrtf(2 * (GRAVITY)*JUMP_HEIGHT);
+				onGround = false;
+			}
+		}
+		prevSpaceKey = true;
+	}
+	else {
+		prevSpaceKey = false;
+	}
+	jumpSpeed += GRAVITY;//速度 += 加速度
+	transform_.position_.y += jumpSpeed; //座標 += 速度
+	if (pField != nullptr) {
+		//(50,64)と(14,64)も見る
+		int pushR = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 64);
+		int pushL = pField->CollisionDown(transform_.position_.x + 14, transform_.position_.y + 64);
+		int push = max(pushR, pushL);//２つの足元のめり込みの大きい方
+		if (push >= 1) {
+			transform_.position_.y -= push -1;
+			jumpSpeed = 0.0f;
+			onGround = true;
+		}
+		else {
+			onGround = false;
+		}
 	}
 
 	//if (CheckHitKey(KEY_INPUT_SPACE)) 
