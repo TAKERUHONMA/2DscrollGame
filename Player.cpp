@@ -189,6 +189,11 @@ void Player::Update()
 		x = 400;
 		cam->SetValue((int)transform_.position_.x - x);
 	}
+	else if (x < 1)
+	{
+		x = 1;
+		cam->SetValue((int)transform_.position_.x + x);
+	}
 
 	if (transform_.position_.y >= 700)
 	{
