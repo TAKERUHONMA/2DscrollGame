@@ -42,6 +42,8 @@
     <ClCompile Include="Banner.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Livingthings.cpp" />
+    <ClCompile Include="GameOverScene.cpp" />
+    <ClCompile Include="GameClear.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\GameObject.h">
@@ -72,5 +74,7 @@
     <ClInclude Include="Ease.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Livingthings.h" />
+    <ClInclude Include="GameOverScene.h" />
+    <ClInclude Include="GameClear.h" />
   </ItemGroup>
 </Project>

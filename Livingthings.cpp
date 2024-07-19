@@ -69,7 +69,7 @@ void Livingthings::Update()
 
 
 
-	sinAngle += 2.0f;//“x
+	sinAngle += 1.0f;//“x
 	float sinValue = sinf(sinAngle * DX_PI_F / 180.0f);
 	transform_.position_.y = baseY + sinValue * 150;
 
