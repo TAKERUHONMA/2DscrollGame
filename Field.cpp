@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Player.h"
 #include "Bird.h"
+#include "Livingthings.h"
 #include "Engine/CsvReader.h"
 
 
@@ -68,6 +69,11 @@ void Field::Reset()
 				pbird->SetPosition(w * 32, h * 32);
 			}
 			break;
+			case 2://Livingthings
+			{
+				Livingthings* pLivingthings = Instantiate<Livingthings>(GetParent());
+				pLivingthings->SetPosition(w * 32, h * 32);
+			}
 			}
 		}
 	}

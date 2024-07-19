@@ -138,6 +138,7 @@
     <ClCompile Include="Engine\SceneManager.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="Field.cpp" />
+    <ClCompile Include="Livingthings.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Stone.cpp" />
     <ClCompile Include="TestScene.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Engine\SceneManager.h" />
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="Field.h" />
+    <ClInclude Include="Livingthings.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Stone.h" />
     <ClInclude Include="TestScene.h" />
