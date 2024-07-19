@@ -87,6 +87,11 @@ void Bird::Update()
 	{
 		counter = 160;
 	}
+
+	if (CheckHitKey(KEY_INPUT_R))
+	{
+		Reset();
+	}
 }
 
 void Bird::Draw()
@@ -115,6 +120,11 @@ bool Bird::CollideCircle(float x, float y, float r)
 	if ((dx * dx + dy * dy) < (r + myR) * (r + myR))
 		return true;
 	return false;
+}
+
+void Bird::Reset()
+{
+	KillMe();
 }
 
 void Bird::SetPosition(int x, int y)

@@ -69,7 +69,7 @@ void Livingthings::Update()
 
 
 
-	sinAngle += 3.0f;//“x
+	sinAngle += 2.0f;//“x
 	float sinValue = sinf(sinAngle * DX_PI_F / 180.0f);
 	transform_.position_.y = baseY + sinValue * 150;
 
@@ -86,6 +86,11 @@ void Livingthings::Update()
 	if (counter == 0)
 	{
 		counter = 160;
+	}
+
+	if (CheckHitKey(KEY_INPUT_R))
+	{
+		Reset();
 	}
 }
 
@@ -122,4 +127,9 @@ bool Livingthings::CollideCircle(float x, float y, float r)
 	if ((dx * dx + dy * dy) < (r + myR) * (r + myR))
 		return true;
 	return false;
+}
+
+void Livingthings::Reset()
+{
+	KillMe();
 }

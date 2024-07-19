@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Field.h"
 #include "Bird.h"
+#include "Livingthings.h"
 #include "TestScene.h"
 
 namespace {
@@ -216,6 +217,18 @@ void Player::Update()
 		}
 	}
 
+	std::list<Livingthings*> pLivingthings = GetParent()->FindGameObjects<Livingthings>();
+	for (Livingthings* pLivingthing : pLivingthings)
+	{
+		if (pLivingthing->CollideCircle(transform_.position_.x + 32.0f, transform_.position_.y + 32.0f, 20.0f))
+		{
+			animType = 4;
+			animFrame = 0;
+			state = S_Cry;
+			scene->StartDead();
+		}
+	}
+
 	//‚±‚±‚ÅƒJƒƒ‰ˆÊ’u‚Ì’²®
 	Camera* cam = GetParent()->FindGameObject<Camera>();
 	int x = (int)transform_.position_.x - cam->GetValue();
@@ -271,6 +284,6 @@ void Player::SetPosition(int x, int y)
 void Player::Reset()
 {
 	count = 0;
-	STONE_NUMBER = 576;
+	STONE_NUMBER = 940;
 	DrawRectGraph(170, 0, 0, STONE_NUMBER, 64, 64, kazu, TRUE);
 }

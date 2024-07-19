@@ -21,6 +21,8 @@ public:
 
 	//‰~‚Ì“–‚½‚è”»’è‚ð‚·‚é
 	bool CollideCircle(float x, float y, float r);
+
+	void Reset();
 private:
 	bool prevSpaceKey;
 	float jumpSpeed;
