@@ -14,6 +14,18 @@
     <Filter Include="01Engine\ResourceManager">
       <UniqueIdentifier>{bedee914-5063-4c08-95bb-79c861b4969c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{ba81e6c6-eb0d-4114-9c06-385b5e33b01f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{98d8ba99-c552-485e-9088-5954831eda15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{de59983b-fbe3-43fa-a1dc-621a71f71a89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage">
+      <UniqueIdentifier>{2dac9ff5-555d-4c63-97c9-3aa369f724eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\GameObject.cpp">
@@ -34,16 +46,36 @@
     <ClCompile Include="Engine\Transform.cpp">
       <Filter>01Engine\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="TestScene.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Stone.cpp" />
-    <ClCompile Include="Bird.cpp" />
-    <ClCompile Include="Field.cpp" />
-    <ClCompile Include="Banner.cpp" />
-    <ClCompile Include="TitleScene.cpp" />
-    <ClCompile Include="Livingthings.cpp" />
-    <ClCompile Include="GameOverScene.cpp" />
-    <ClCompile Include="GameClear.cpp" />
+    <ClCompile Include="TestScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameClear.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Stone.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Bird.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Livingthings.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Banner.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\GameObject.h">
@@ -64,17 +96,41 @@
     <ClInclude Include="Engine\Transform.h">
       <Filter>01Engine\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Stone.h" />
-    <ClInclude Include="Bird.h" />
-    <ClInclude Include="Field.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Banner.h" />
-    <ClInclude Include="Ease.h" />
-    <ClInclude Include="TitleScene.h" />
-    <ClInclude Include="Livingthings.h" />
-    <ClInclude Include="GameOverScene.h" />
-    <ClInclude Include="GameClear.h" />
+    <ClInclude Include="TestScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameClear.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Stone.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Bird.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Livingthings.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Banner.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Ease.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
