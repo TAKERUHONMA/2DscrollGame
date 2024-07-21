@@ -35,7 +35,7 @@ void SceneManager::Update()
 		case SCENE_ID_TITLE: Instantiate<TitleScene>(this); break;
 		case SCENE_ID_TEST: Instantiate<TestScene>(this); break;
 		case SCENE_ID_GAMEOVER: Instantiate<GameOverScene>(this); break;
-		case SCENE_ID_GAMECLEAR: Instantiate<GameClearScene>(this); break;
+		case SCENE_ID_GAMECLEAR: Instantiate<GameClear>(this); break;
 		}
 		currentSceneID_ = nextSceneID_;
 	}
