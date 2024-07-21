@@ -1,17 +1,16 @@
 #pragma once
 #include "Engine/GameObject.h"
-
-class Livingthings
-	: public GameObject 
+class Gool :
+    public GameObject
 {
 public:
-	Livingthings(GameObject* scene);
-	~Livingthings();
+	Gool(GameObject* scene);
+	~Gool();
 	void Update() override;
 	void Draw() override;
 
 	/// <summary>
-	/// 生き物の座標をセットする
+	/// 旗の座標をセットする
 	/// </summary>
 	/// <param name="x">X座標</param>
 	/// <param name="y">Y座標</param>

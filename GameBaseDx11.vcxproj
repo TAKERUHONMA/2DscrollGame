@@ -140,6 +140,7 @@
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
+    <ClCompile Include="Gool.cpp" />
     <ClCompile Include="Livingthings.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Stone.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Field.h" />
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameOverScene.h" />
+    <ClInclude Include="Gool.h" />
     <ClInclude Include="Livingthings.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Stone.h" />

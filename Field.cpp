@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Bird.h"
 #include "Livingthings.h"
+#include "Gool.h"
 #include "Engine/CsvReader.h"
 
 
@@ -43,18 +44,23 @@ void Field::Reset()
 	height = csv.GetHeight();
 	Map = new int[width * height];//C言語での動的二次元配列の取り方
 	
-	for (int h = 0; h < height; h++) {
-		if (csv.GetString(0, h) == "") {
+	for (int h = 0; h < height; h++) 
+	{
+		if (csv.GetString(0, h) == "") 
+		{
 			height = h;
 			break;
 		}
-		for (int w = 0; w < width; w++) {
+		for (int w = 0; w < width; w++)
+		{
 			Map[h*width+w] = csv.GetInt(w, h);
 		}
 	}
 	//Mapデータの中で0があれば、Playerの座標を0の位置にする
-	for (int h = 0; h < height; h++) {
-		for (int w = 0; w < width; w++) {
+	for (int h = 0; h < height; h++) 
+	{
+		for (int w = 0; w < width; w++) 
+		{
 			switch (csv.GetInt(w,h+height+1))
 			{
 			case 0://player
@@ -73,6 +79,11 @@ void Field::Reset()
 			{
 				Livingthings* pLivingthings = Instantiate<Livingthings>(GetParent());
 				pLivingthings->SetPosition(w * 32, h * 32);
+			}
+			case 3://Gool
+			{
+				Gool* Gools = Instantiate<Gool>(GetParent());
+				Gools->SetPosition(w * 32, h * 32);
 			}
 			}
 		}
@@ -110,7 +121,8 @@ void Field::Draw()
 
 int Field::CollisionRight(int x, int y)
 {
-	if (IsWallBlock(x, y)) {
+	if (IsWallBlock(x, y))
+	{
 		//当たっているので、めり込んだ量を返す
 		return x % 32 + 1;
 	}
@@ -120,7 +132,8 @@ int Field::CollisionRight(int x, int y)
 
 int Field::CollisionLeft(int x, int y)
 {
-	if (IsWallBlock(x, y)) {
+	if (IsWallBlock(x, y)) 
+	{
 		//当たっているので、めり込んだ量を返す
 		return x % 32 - 1;
 	}
@@ -130,7 +143,8 @@ int Field::CollisionLeft(int x, int y)
 
 int Field::CollisionDown(int x, int y)
 {
-	if (IsWallBlock(x, y)) {
+	if (IsWallBlock(x, y)) 
+	{
 		//当たっているので、めり込んだ量を返す
 		return y % 32 + 1;
 	}
@@ -140,7 +154,8 @@ int Field::CollisionDown(int x, int y)
 
 int Field::CollisionUp(int x, int y)
 {
-	if (IsWallBlock(x, y)) {
+	if (IsWallBlock(x, y)) 
+	{
 		//当たっているので、めり込んだ量を返す
 		return y % 32 + 1;
 	}
@@ -152,7 +167,8 @@ bool Field::IsWallBlock(int x, int y)
 {
 	int chipX = x / 32;
 	int chipY = y / 32;
-	switch (Map[chipY*width+chipX]) {
+	switch (Map[chipY*width+chipX]) 
+	{
 	case 16:
 	case 17:
 	case 18:

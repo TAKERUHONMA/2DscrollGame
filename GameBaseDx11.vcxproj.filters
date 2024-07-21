@@ -76,6 +76,9 @@
     <ClCompile Include="Field.cpp">
       <Filter>Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Gool.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\GameObject.h">
@@ -130,6 +133,9 @@
       <Filter>Stage</Filter>
     </ClInclude>
     <ClInclude Include="Field.h">
+      <Filter>Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Gool.h">
       <Filter>Stage</Filter>
     </ClInclude>
   </ItemGroup>

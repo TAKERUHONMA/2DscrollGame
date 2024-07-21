@@ -39,7 +39,8 @@ void Banner::Draw()
 		DrawRectGraph(200, 400, 0, 0, 256, 64, hImage, TRUE);//スタート
 	else if (view == ViewID::V_Clear)
 		DrawRectGraph(200, 400, 0, 64, 256, 64, hImage, TRUE);//クリア
-	else if (view == ViewID::V_GameOver) {
+	else if (view == ViewID::V_GameOver) 
+	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, transparency);
 		DrawRectGraph(200, goY, 0, 128, 256, 128, hImage, TRUE);//ゲームオーバー
 	}

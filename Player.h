@@ -30,6 +30,7 @@ private:
 	bool onGround;
 	int counter;
 	int count;
+	int rcount;
 	int animType; //ó‹µ
 	int animFrame;//ƒRƒ}
 	int frameCounter;

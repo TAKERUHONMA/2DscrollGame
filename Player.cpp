@@ -1,3 +1,4 @@
+#include "Engine/SceneManager.h"
 #include "Player.h"
 #include <DxLib.h>
 #include <assert.h>
@@ -5,6 +6,7 @@
 #include "Camera.h"
 #include "Field.h"
 #include "Bird.h"
+#include "Gool.h"
 #include "Livingthings.h"
 #include "TestScene.h"
 
@@ -18,7 +20,7 @@ namespace {
 	//const float INITIALVELOCITY = 18.0f;
 
 }
-Player::Player(GameObject* parent) : GameObject(sceneTop), counter(0),count(0)
+Player::Player(GameObject* parent) : GameObject(sceneTop), counter(0),count(0),rcount(0)
 {
 	hImage = LoadGraph("Assets/aoi.png");
 	kazu = LoadGraph("Assets/suji.png");
@@ -48,6 +50,7 @@ void Player::Update()
 	Stone* st = Instantiate<Stone>(GetParent());
 
 	counter -= 1;
+	//rcount -= 1;
 
 	if (state == S_Cry) {
 		frameCounter++;
@@ -57,6 +60,7 @@ void Player::Update()
 		}
 		return;
 	}
+
 	TestScene* scene = dynamic_cast<TestScene*>(GetParent());
 	if (!scene->CanMove())
 		return;
@@ -78,18 +82,25 @@ void Player::Update()
 	}
 	else if (CheckHitKey(KEY_INPUT_A)) 
 	{
-		transform_.position_.x -= MOVE_SPEED;
-		if (++frameCounter >= 8) 
+		if (transform_.position_.x <= 1)
 		{
-			animFrame = (animFrame + 1) % 4;
-			frameCounter = 0;
+			transform_.position_.x = 0;
 		}
-		int hitX = transform_.position_.x;
-		int hitY = transform_.position_.y;
-		if (pField != nullptr)
+		else
 		{
-			int push = pField->CollisionLeft(hitX, hitY);
-			transform_.position_.x += push;
+			transform_.position_.x -= MOVE_SPEED;
+			if (++frameCounter >= 8)
+			{
+				animFrame = (animFrame + 1) % 4;
+				frameCounter = 0;
+			}
+			int hitX = transform_.position_.x;
+			int hitY = transform_.position_.y;
+			if (pField != nullptr)
+			{
+				int push = pField->CollisionLeft(hitX, hitY);
+				transform_.position_.x += push;
+			}
 		}
 	}
 	else 
@@ -222,6 +233,20 @@ void Player::Update()
 	{
 		if (pLivingthing->CollideCircle(transform_.position_.x + 32.0f, transform_.position_.y + 32.0f, 20.0f))
 		{
+			//animType = 4;
+			//animFrame = 0;
+			//state = S_Cry;
+			//scene->StartDead();
+			SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+			pSceneManager->ChangeScene(SCENE_ID_GAMECLEAR);
+		}
+	}
+
+	std::list<Gool*> pGools = GetParent()->FindGameObjects<Gool>();
+	for (Gool* pGool : pGools)
+	{
+		if (pGool->CollideCircle(transform_.position_.x + 100.0f, transform_.position_.y + 200.0f, 180.0f))
+		{
 			animType = 4;
 			animFrame = 0;
 			state = S_Cry;
@@ -232,16 +257,20 @@ void Player::Update()
 	//‚±‚±‚ÅƒJƒƒ‰ˆÊ’u‚Ì’²®
 	Camera* cam = GetParent()->FindGameObject<Camera>();
 	int x = (int)transform_.position_.x - cam->GetValue();
-	if (x > 400) 
-	{
-		x = 400;
-		cam->SetValue((int)transform_.position_.x - x);
-	}
-	else if (x < 1)
+	if (x <= 1)
 	{
 		x = 1;
-		cam->SetValue((int)transform_.position_.x + x);
+		cam->SetValue((int)transform_.position_.x);
 	}
+	else
+	{
+		if (x > 400)
+		{
+			x = 400;
+			cam->SetValue((int)transform_.position_.x - x);
+		}
+	}
+
 
 	if (transform_.position_.y >= 700)
 	{
@@ -250,7 +279,7 @@ void Player::Update()
 
 	if (CheckHitKey(KEY_INPUT_R))
 	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, transparency);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, rcount);
 		Reset();
 	}
 	else
@@ -268,6 +297,7 @@ void Player::Draw()
 	int x = (int)transform_.position_.x;
 	int y = (int)transform_.position_.y;
 	Camera* cam = GetParent()->FindGameObject<Camera>();
+
 	if (cam != nullptr) 
 	{
 		x -= cam->GetValue();
