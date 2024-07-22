@@ -4,6 +4,7 @@
 #include "Field.h"
 #include "Camera.h"
 #include "Banner.h"
+#include "Engine/SceneManager.h"
 
 //コンストラクタ
 TestScene::TestScene(GameObject * parent)
@@ -50,10 +51,10 @@ bool TestScene::CanMove()
 
 void TestScene::StartReady()
 {
-	state = S_Ready;
-	readyTimer = 2.0f;//Readyの表示時間
-	Banner* bn = FindGameObject<Banner>();
-	bn->View(Banner::ViewID::V_Start);
+	//state = S_Ready;
+	//readyTimer = 2.0f;//Readyの表示時間
+	//Banner* bn = FindGameObject<Banner>();
+	//bn->View(Banner::ViewID::V_Start);
 	//Playerの初期化
 	//敵の初期化
 }
@@ -84,8 +85,10 @@ void TestScene::UpdateClear()
 void TestScene::StartDead()
 {
 	state = S_Dead;
-	Banner* bn = FindGameObject<Banner>();
-	bn->View(Banner::ViewID::V_GameOver);
+	//Banner* bn = FindGameObject<Banner>();
+	//bn->View(Banner::ViewID::V_GameOver);
+	SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+	pSceneManager->ChangeScene(SCENE_ID_GAMECLEAR);
 }
 
 void TestScene::UpdateDead()

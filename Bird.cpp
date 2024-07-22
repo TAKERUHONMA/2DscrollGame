@@ -69,11 +69,11 @@ void Bird::Update()
 
 
 	
-	//sinAngle += 3.0f;//度
+	//sinAngle += 1.0f;//度
 	//float sinValue = sinf(sinAngle * DX_PI_F / 180.0f);
-	//transform_.position_.y = baseY + sinValue * 50;
+	//transform_.position_.x = baseY + sinValue * 150;
 
-	transform_.position_.x -= 0.5f;
+	transform_.position_.x -= 0.8f;
 	
 	jumpSpeed += GRAVITY;//速度 += 加速度
 	transform_.position_.y += jumpSpeed; //座標 += 速度
@@ -131,5 +131,5 @@ void Bird::SetPosition(int x, int y)
 {
 	transform_.position_.x = x;
 	transform_.position_.y = y;
-	baseY = y;
+	baseY = x;
 }

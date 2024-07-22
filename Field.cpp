@@ -80,11 +80,13 @@ void Field::Reset()
 				Livingthings* pLivingthings = Instantiate<Livingthings>(GetParent());
 				pLivingthings->SetPosition(w * 32, h * 32);
 			}
+			break;
 			case 3://Gool
 			{
 				Gool* Gools = Instantiate<Gool>(GetParent());
 				Gools->SetPosition(w * 32, h * 32);
 			}
+			break;
 			}
 		}
 	}

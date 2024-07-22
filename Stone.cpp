@@ -75,6 +75,11 @@ void Stone::Update()
 	{
 		KillMe();
 	}
+
+	if (CheckHitKey(KEY_INPUT_R))
+	{
+		Reset();
+	}
 }
 
 void Stone::Draw()
@@ -92,4 +97,9 @@ void Stone::SetPosition(XMFLOAT3 pos)
 {
 	transform_.position_ = pos;
 	timer = 150;
+}
+
+void Stone::Reset()
+{
+	KillMe();
 }

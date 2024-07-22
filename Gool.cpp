@@ -73,6 +73,8 @@ void Gool::Draw()
 	}
 
 	DrawGraph(x, y, hImage, TRUE);
+
+	//DrawCircle(x + 100.0f, y + 100.0f, 200.0f, GetColor(255, 0, 0),0);
 }
 
 void Gool::SetPosition(int x, int y)
@@ -83,8 +85,8 @@ void Gool::SetPosition(int x, int y)
 
 bool Gool::CollideCircle(float x, float y, float r)
 {
-	float myCenterX = transform_.position_.x + 32.0f;
-	float myCenterY = transform_.position_.y + 32.0f;
+	float myCenterX = transform_.position_.x + 100.0f;
+	float myCenterY = transform_.position_.y + 100.0f;
 	float myR = 24.0f;
 	float dx = myCenterX - x;
 	float dy = myCenterY - y;

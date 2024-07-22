@@ -50,13 +50,15 @@ void Player::Update()
 	Stone* st = Instantiate<Stone>(GetParent());
 
 	counter -= 1;
-	//rcount -= 1;
+	//rcount += 1;
 
-	if (state == S_Cry) {
-		frameCounter++;
-		if (frameCounter >= 8) {
+	if (state == S_Cry)
+	{
+		//frameCounter++;
+		if (frameCounter >= 4)
+		{
 			frameCounter = 0;
-			animFrame = (animFrame + 1) % 2;
+			//animFrame = (animFrame + 1) % 2;
 		}
 		return;
 	}
@@ -216,6 +218,7 @@ void Player::Update()
 		}
 	}
 	
+	//鳥の当たり判定
 	std::list<Bird*> pBirds = GetParent()->FindGameObjects<Bird>();
 	for (Bird* pBird : pBirds) 
 	{
@@ -228,6 +231,7 @@ void Player::Update()
 		}
 	}
 
+	//生き物の当たり判定
 	std::list<Livingthings*> pLivingthings = GetParent()->FindGameObjects<Livingthings>();
 	for (Livingthings* pLivingthing : pLivingthings)
 	{
@@ -242,15 +246,28 @@ void Player::Update()
 		}
 	}
 
+	//ゴールの当たり判定
 	std::list<Gool*> pGools = GetParent()->FindGameObjects<Gool>();
 	for (Gool* pGool : pGools)
 	{
-		if (pGool->CollideCircle(transform_.position_.x + 100.0f, transform_.position_.y + 200.0f, 180.0f))
+		if (pGool->CollideCircle(transform_.position_.x + 32.0f, transform_.position_.y + 32.0f, 110.0f))
 		{
 			animType = 4;
 			animFrame = 0;
-			state = S_Cry;
+			//state = S_Cry;
 			scene->StartDead();
+			//rcount = 100;
+			//if (rcount == 99)
+			//{
+			//	SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+			//	pSceneManager->ChangeScene(SCENE_ID_GAMECLEAR);
+			//}
+			//else
+			//{
+			//	rcount--;
+			//}
+			////SetDrawBlendMode(DX_BLENDMODE_ALPHA, transparency);
+
 		}
 	}
 
@@ -274,12 +291,15 @@ void Player::Update()
 
 	if (transform_.position_.y >= 700)
 	{
+		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+		pSceneManager->ChangeScene(SCENE_ID_GAMEOVER);
 		KillMe();
 	}
 
+	//リセット
 	if (CheckHitKey(KEY_INPUT_R))
 	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, rcount);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, transparency);
 		Reset();
 	}
 	else
