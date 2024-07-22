@@ -21,5 +21,6 @@ public:
 	void Release() override;
 private:
 	int clear;
+	int counter;
 };
 

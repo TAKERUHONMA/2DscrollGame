@@ -22,7 +22,7 @@ namespace {
 }
 Player::Player(GameObject* parent) : GameObject(sceneTop), counter(0),count(0),rcount(0)
 {
-	hImage = LoadGraph("Assets/aoi.png");
+	hImage = LoadGraph("Assets/player2.png");
 	kazu = LoadGraph("Assets/suji.png");
 	assert(hImage > 0);
 	transform_.position_.x = 10.0f;
@@ -34,6 +34,7 @@ Player::Player(GameObject* parent) : GameObject(sceneTop), counter(0),count(0),r
 	frameCounter = 0;
 	state = S_Walk;
 	transparency = 0;
+	Reset();
 }
 
 Player::~Player()
@@ -72,7 +73,7 @@ void Player::Update()
 		transform_.position_.x += MOVE_SPEED;
 		if (++frameCounter >= 8) 
 		{
-			animFrame = (animFrame + 1) % 4;
+			animFrame = (animFrame + 1) % 3;
 			frameCounter = 0;
 		}
 		int hitX = transform_.position_.x + 50;
@@ -93,7 +94,7 @@ void Player::Update()
 			transform_.position_.x -= MOVE_SPEED;
 			if (++frameCounter >= 8)
 			{
-				animFrame = (animFrame + 1) % 4;
+				animFrame = (animFrame + 1) % 3;
 				frameCounter = 0;
 			}
 			int hitX = transform_.position_.x;
@@ -133,8 +134,8 @@ void Player::Update()
 	if (pField != nullptr) 
 	{
 		//(50,64)‚Æ(14,64)‚àŒ©‚é
-		int pushR = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 64);
-		int pushL = pField->CollisionDown(transform_.position_.x + 14, transform_.position_.y + 64);
+		int pushR = pField->CollisionDown(transform_.position_.x + 80, transform_.position_.y + 80);
+		int pushL = pField->CollisionDown(transform_.position_.x + 40, transform_.position_.y + 80);
 		int push = max(pushR, pushL);//‚Q‚Â‚Ì‘«Œ³‚Ì‚ß‚èž‚Ý‚Ì‘å‚«‚¢•û
 		if (push >= 1) {
 			transform_.position_.y -= push -1;
@@ -322,7 +323,7 @@ void Player::Draw()
 	{
 		x -= cam->GetValue();
 	}
-	DrawRectGraph(x, y, animFrame * 64, animType * 64, 64, 64, hImage, TRUE);
+	DrawRectGraph(x, y, animFrame * 80,180, 88, 88, hImage, TRUE);
 }
 
 void Player::SetPosition(int x, int y)

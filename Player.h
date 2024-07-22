@@ -20,6 +20,8 @@ public:
 	void SetPosition(int x, int y);
 
 	void Reset();
+
+	int count;
 private:
 	int hImage;
 	int kazu;
@@ -29,7 +31,6 @@ private:
 	float jumpSpeed;
 	bool onGround;
 	int counter;
-	int count;
 	int rcount;
 	int animType; //ó‹µ
 	int animFrame;//ƒRƒ}
