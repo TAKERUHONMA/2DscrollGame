@@ -135,7 +135,7 @@ void Player::Update()
 	{
 		//(50,64)‚Æ(14,64)‚àŒ©‚é
 		int pushR = pField->CollisionDown(transform_.position_.x + 80, transform_.position_.y + 80);
-		int pushL = pField->CollisionDown(transform_.position_.x + 40, transform_.position_.y + 80);
+		int pushL = pField->CollisionDown(transform_.position_.x + 14, transform_.position_.y + 80);
 		int push = max(pushR, pushL);//‚Q‚Â‚Ì‘«Œ³‚Ì‚ß‚èž‚Ý‚Ì‘å‚«‚¢•û
 		if (push >= 1) {
 			transform_.position_.y -= push - 1;
@@ -225,10 +225,12 @@ void Player::Update()
 	{
 		if (pBird->CollideCircle(transform_.position_.x + 32.0f, transform_.position_.y + 32.0f, 20.0f))
 		{
-			animType = 4;
-			animFrame = 0;
-			state = S_Cry;
-			scene->StartDead();
+			//animType = 4;
+			//animFrame = 0;
+			//state = S_Cry;
+			//scene->StartDead();
+			SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+			pSceneManager->ChangeScene(SCENE_ID_GAMEOVER);
 		}
 	}
 
@@ -243,7 +245,7 @@ void Player::Update()
 			//state = S_Cry;
 			//scene->StartDead();
 			SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-			pSceneManager->ChangeScene(SCENE_ID_GAMECLEAR);
+			pSceneManager->ChangeScene(SCENE_ID_GAMEOVER);
 		}
 	}
 

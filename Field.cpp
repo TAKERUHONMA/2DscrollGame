@@ -5,6 +5,7 @@
 #include "Bird.h"
 #include "Livingthings.h"
 #include "Gool.h"
+#include "KanBan1.h"
 #include "Engine/CsvReader.h"
 
 
@@ -15,6 +16,7 @@ Field::Field(GameObject* scene)
 	hImage = LoadGraph("Assets/bgchar.png");
 	background = LoadGraph("Assets/mori.jpg");
 	stone = LoadGraph("Assets/isi.png");
+	sousa = LoadGraph("Assets/sousa.png");
 	assert(hImage > 0);
 	assert(background > 0);
 	Map = nullptr;
@@ -87,6 +89,12 @@ void Field::Reset()
 				Gools->SetPosition(w * 32, h * 32);
 			}
 			break;
+			case 4://Gool
+			{
+				KanBan1* k1 = Instantiate<KanBan1>(GetParent());
+				k1->SetPosition(w * 32, h * 32);
+			}
+			break;
 			}
 		}
 	}
@@ -103,6 +111,8 @@ void Field::Draw()
 	DrawGraph(0,0, background, TRUE);
 
 	DrawGraph(0, 0, stone, TRUE);
+
+	DrawGraph(0, 50, sousa, TRUE);
 
 	int scroll = 0;
 	Camera* cam = GetParent()->FindGameObject<Camera>();

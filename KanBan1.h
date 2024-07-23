@@ -1,12 +1,12 @@
 #pragma once
 #include "Engine/GameObject.h"
-class TitleScene :
+class KanBan1 :
     public GameObject
 {
 public:
 	//コンストラクタ
-    //引数：parent  親オブジェクト（SceneManager）
-	TitleScene(GameObject* parent);
+	//引数：parent  親オブジェクト（SceneManager）
+	KanBan1(GameObject* parent);
 
 	//初期化
 	void Initialize() override;
@@ -19,7 +19,9 @@ public:
 
 	//開放
 	void Release() override;
+
+	void SetPosition(int x, int y);
 private:
-	int title;
+	int kanban;
 };
 

@@ -5,6 +5,7 @@
 TitleScene::TitleScene(GameObject* parent)
 	:GameObject(parent, "TitleScene")
 {
+	title = LoadGraph("Assets/Title.png");
 }
 
 void TitleScene::Initialize()
@@ -25,6 +26,7 @@ void TitleScene::Update()
 
 void TitleScene::Draw()
 {
+	DrawGraph(0, 0, title, TRUE);
 }
 
 void TitleScene::Release()

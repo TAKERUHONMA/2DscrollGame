@@ -141,6 +141,7 @@
     <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="Gool.cpp" />
+    <ClCompile Include="KanBan1.cpp" />
     <ClCompile Include="Livingthings.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Stone.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameOverScene.h" />
     <ClInclude Include="Gool.h" />
+    <ClInclude Include="KanBan1.h" />
     <ClInclude Include="Livingthings.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Stone.h" />

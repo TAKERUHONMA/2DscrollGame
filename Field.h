@@ -53,4 +53,5 @@ private:
 	int* Map;
 	int width;
 	int height;
+	int sousa;
 };
