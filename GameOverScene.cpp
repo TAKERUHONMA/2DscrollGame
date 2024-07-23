@@ -5,6 +5,8 @@
 GameOverScene::GameOverScene(GameObject* parent)
 {
 	over = LoadGraph("Assets/GameOver.png");
+	s = LoadGraph("Assets/s.png");
+	q = LoadGraph("Assets/q.png");
 	counter = 0;
 }
 
@@ -14,10 +16,10 @@ void GameOverScene::Initialize()
 
 void GameOverScene::Update()
 {
-	if (CheckHitKey(KEY_INPUT_ESCAPE))
+	if (CheckHitKey(KEY_INPUT_Q))
 	{
-			SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-			pSceneManager->ChangeScene(SCENE_ID_TITLE);
+		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+		pSceneManager->ChangeScene(SCENE_ID_TITLE);
 	}
 
 	if (CheckHitKey(KEY_INPUT_SPACE))
@@ -29,7 +31,9 @@ void GameOverScene::Update()
 
 void GameOverScene::Draw()
 {
-	DrawGraph(0, 0, over, TRUE);
+	DrawGraph(150, 200, over, TRUE);
+	DrawGraph(150, 400, s, TRUE);
+	DrawGraph(260, 500, q, TRUE);
 }
 
 void GameOverScene::Release()

@@ -21,4 +21,7 @@ public:
 	void Release() override;
 private:
 	int clear;
+	int mori;
+	int s;
+	int e;
 };

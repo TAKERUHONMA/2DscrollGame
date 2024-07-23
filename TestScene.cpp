@@ -51,18 +51,15 @@ bool TestScene::CanMove()
 
 void TestScene::StartReady()
 {
-	//state = S_Ready;
-	//readyTimer = 2.0f;//Ready‚Ì•\¦ŠÔ
-	//Banner* bn = FindGameObject<Banner>();
-	//bn->View(Banner::ViewID::V_Start);
-	//Player‚Ì‰Šú‰»
-	//“G‚Ì‰Šú‰»
+	readyTimer = 1.5f;
+	state = S_Ready;
 }
 
 void TestScene::UpdateReady()
 {
 	readyTimer -= 1.0f / 60.0f;
-	if (readyTimer <= 0.0f) {
+	if (readyTimer <= 0.0f) 
+	{
 		StartPlay();
 	}
 }
@@ -70,30 +67,44 @@ void TestScene::UpdateReady()
 void TestScene::StartPlay()
 {
 	state = S_Play;
-	Banner* bn = FindGameObject<Banner>();
-	bn->View(Banner::ViewID::V_Nothing);
+	//Banner* bn = FindGameObject<Banner>();
+	//bn->View(Banner::ViewID::V_Nothing);
 }
 
 void TestScene::UpdatePlay()
 {
 }
 
+//void TestScene::StartClear()
+//{
+//	readyTimer = 1.5f;
+//	state = S_Clear;
+//}
+
 void TestScene::UpdateClear()
 {
+	//readyTimer -= 1.0f / 60.0f;
+	//if (readyTimer <= 0.0f)
+	//{
+	//	SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+	//	pSceneManager->ChangeScene(SCENE_ID_GAMECLEAR);
+	//}
 }
 
 void TestScene::StartDead()
 {
+	readyTimer = 1.5f;
 	state = S_Dead;
 	//Banner* bn = FindGameObject<Banner>();
 	//bn->View(Banner::ViewID::V_GameOver);
-	SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-	pSceneManager->ChangeScene(SCENE_ID_GAMECLEAR);
 }
 
 void TestScene::UpdateDead()
 {
-	if (CheckHitKey(KEY_INPUT_SPACE)) {
-		StartReady();
+	readyTimer -= 1.0f / 60.0f;
+	if (readyTimer <= 0.0f)
+	{
+		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+		pSceneManager->ChangeScene(SCENE_ID_GAMEOVER);
 	}
 }

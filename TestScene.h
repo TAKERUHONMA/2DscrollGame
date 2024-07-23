@@ -35,6 +35,7 @@ private:
 	void UpdateReady();
 	void StartPlay();
 	void UpdatePlay();
+	void StartClear();
 	void UpdateClear();
 public:
 	void StartDead();

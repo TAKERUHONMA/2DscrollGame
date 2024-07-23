@@ -36,6 +36,7 @@ private:
 	int animFrame;//ƒRƒ}
 	int frameCounter;
 	float transparency;//“§–¾“x
+	float readyTimer;
 
 	enum State {
 		S_Walk=0,

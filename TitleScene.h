@@ -21,5 +21,8 @@ public:
 	void Release() override;
 private:
 	int title;
+	int mori;
+	int moji1;
+	int moji2;
 };
 

@@ -35,15 +35,15 @@ void Banner::Update()
 
 void Banner::Draw()
 {
-	if (view == ViewID::V_Start)
-		DrawRectGraph(200, 400, 0, 0, 256, 64, hImage, TRUE);//スタート
-	else if (view == ViewID::V_Clear)
-		DrawRectGraph(200, 400, 0, 64, 256, 64, hImage, TRUE);//クリア
-	else if (view == ViewID::V_GameOver) 
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, transparency);
-		DrawRectGraph(200, goY, 0, 128, 256, 128, hImage, TRUE);//ゲームオーバー
-	}
+	//if (view == ViewID::V_Start)
+	//	DrawRectGraph(200, 400, 0, 0, 256, 64, hImage, TRUE);//スタート
+	//else if (view == ViewID::V_Clear)
+	//	DrawRectGraph(200, 400, 0, 64, 256, 64, hImage, TRUE);//クリア
+	//else if (view == ViewID::V_GameOver) 
+	//{
+	//	SetDrawBlendMode(DX_BLENDMODE_ALPHA, transparency);
+	//	DrawRectGraph(200, goY, 0, 128, 256, 128, hImage, TRUE);//ゲームオーバー
+	//}
 }
 
 void Banner::View(ViewID id)

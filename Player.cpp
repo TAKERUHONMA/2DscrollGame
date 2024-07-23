@@ -34,6 +34,7 @@ Player::Player(GameObject* parent) : GameObject(sceneTop), counter(0), count(0),
 	frameCounter = 0;
 	state = S_Walk;
 	transparency = 0;
+	readyTimer = 1.5f;
 	Reset();
 }
 
@@ -225,12 +226,12 @@ void Player::Update()
 	{
 		if (pBird->CollideCircle(transform_.position_.x + 32.0f, transform_.position_.y + 32.0f, 20.0f))
 		{
-			//animType = 4;
-			//animFrame = 0;
-			//state = S_Cry;
-			//scene->StartDead();
-			SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-			pSceneManager->ChangeScene(SCENE_ID_GAMEOVER);
+			animType = 4;
+			animFrame = 0;
+			state = S_Cry;
+			scene->StartDead();
+			//SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+			//pSceneManager->ChangeScene(SCENE_ID_GAMEOVER);
 		}
 	}
 
@@ -240,12 +241,12 @@ void Player::Update()
 	{
 		if (pLivingthing->CollideCircle(transform_.position_.x + 32.0f, transform_.position_.y + 32.0f, 20.0f))
 		{
-			//animType = 4;
-			//animFrame = 0;
+			animType = 4;
+			animFrame = 0;
 			//state = S_Cry;
-			//scene->StartDead();
-			SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-			pSceneManager->ChangeScene(SCENE_ID_GAMEOVER);
+			scene->StartDead();
+			//SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+			//pSceneManager->ChangeScene(SCENE_ID_GAMEOVER);
 		}
 	}
 
@@ -257,8 +258,15 @@ void Player::Update()
 		{
 			animType = 4;
 			animFrame = 0;
+
+			readyTimer -= 1.0f / 60.0f;
+			if (readyTimer <= 0.0f)
+			{
+				SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+				pSceneManager->ChangeScene(SCENE_ID_GAMECLEAR);
+			}
+
 			//state = S_Cry;
-			scene->StartDead();
 			//rcount = 100;
 			//if (rcount == 99)
 			//{
@@ -294,16 +302,15 @@ void Player::Update()
 
 	if (transform_.position_.y >= 700)
 	{
-		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-		pSceneManager->ChangeScene(SCENE_ID_GAMEOVER);
+		scene->StartDead();
 		KillMe();
 	}
 
 	//ƒŠƒZƒbƒg
 	if (CheckHitKey(KEY_INPUT_R))
 	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, transparency);
 		Reset();
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, transparency);
 	}
 	else
 	{
