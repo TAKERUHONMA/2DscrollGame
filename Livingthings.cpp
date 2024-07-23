@@ -16,6 +16,9 @@ Livingthings::Livingthings(GameObject* scene)
 	transform_.position_.x = 800.0f;
 	transform_.position_.y = 500.0f;
 	counter = 0;
+	animType = 0;
+	animFrame = 0;
+	frameCounter = 0;
 }
 
 Livingthings::~Livingthings()
@@ -30,6 +33,12 @@ void Livingthings::Update()
 {
 	Field* pField = GetParent()->FindGameObject<Field>();
 	counter -= 1;
+
+	if (++frameCounter >= 9)
+	{
+		animFrame = (animFrame + 1) % 3;
+		frameCounter = 0;
+	}
 
 	if (pField != nullptr)
 	{
@@ -103,7 +112,7 @@ void Livingthings::Draw()
 		x -= cam->GetValue();
 	}
 
-	DrawRectGraph(x, y, 0, 0, 64, 64, hImage, TRUE);
+	DrawRectGraph(x, y, 0, animFrame * 64, 64, 64, hImage, TRUE);
 
 	//DrawCircle(x + 32.0f, y + 32.0f, 24.0f, GetColor(255, 0, 0),0);
 }

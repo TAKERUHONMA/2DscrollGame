@@ -29,5 +29,8 @@ private:
 	float sinAngle;
 	int hImage;
 	float baseY;//¶¬‚ÌYÀ•W
+	int animType; //ó‹µ
+	int animFrame;//ƒRƒ}
+	int frameCounter;
 };
 

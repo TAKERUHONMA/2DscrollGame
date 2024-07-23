@@ -13,7 +13,7 @@ Field::Field(GameObject* scene)
 	:GameObject(scene)
 {
 	hImage = LoadGraph("Assets/bgchar.png");
-	background = LoadGraph("Assets/bg2.png");
+	background = LoadGraph("Assets/mori.jpg");
 	stone = LoadGraph("Assets/isi.png");
 	assert(hImage > 0);
 	assert(background > 0);

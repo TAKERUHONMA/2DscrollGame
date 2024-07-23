@@ -14,13 +14,13 @@ namespace {
 	const float MOVE_SPEED = 2.0f;
 	const float GROUND = 400.0f;
 	const float JUMP_HEIGHT = 64.0f * 4.0f;//ジャンプの高さ
-	const float GRAVITY = 9.8f /60.0f;//重力加速度
+	const float GRAVITY = 9.8f / 60.0f;//重力加速度
 	const int MAX_STONE = 20; //小石を投げれる最大数
 	float STONE_NUMBER = 940;
 	//const float INITIALVELOCITY = 18.0f;
 
 }
-Player::Player(GameObject* parent) : GameObject(sceneTop), counter(0),count(0),rcount(0)
+Player::Player(GameObject* parent) : GameObject(sceneTop), counter(0), count(0), rcount(0)
 {
 	hImage = LoadGraph("Assets/player2.png");
 	kazu = LoadGraph("Assets/suji.png");
@@ -68,22 +68,22 @@ void Player::Update()
 	if (!scene->CanMove())
 		return;
 
-	if (CheckHitKey(KEY_INPUT_D)) 
+	if (CheckHitKey(KEY_INPUT_D))
 	{
 		transform_.position_.x += MOVE_SPEED;
-		if (++frameCounter >= 8) 
+		if (++frameCounter >= 8)
 		{
 			animFrame = (animFrame + 1) % 3;
 			frameCounter = 0;
 		}
 		int hitX = transform_.position_.x + 50;
-		int hitY = transform_.position_.y + 63;
+		int hitY = transform_.position_.y + 60;
 		if (pField != nullptr) {
 			int push = pField->CollisionRight(hitX, hitY);
 			transform_.position_.x -= push;
 		}
 	}
-	else if (CheckHitKey(KEY_INPUT_A)) 
+	else if (CheckHitKey(KEY_INPUT_A))
 	{
 		if (transform_.position_.x <= 1)
 		{
@@ -97,8 +97,8 @@ void Player::Update()
 				animFrame = (animFrame + 1) % 3;
 				frameCounter = 0;
 			}
-			int hitX = transform_.position_.x;
-			int hitY = transform_.position_.y;
+			int hitX = transform_.position_.x - 14;
+			int hitY = transform_.position_.y + 60;
 			if (pField != nullptr)
 			{
 				int push = pField->CollisionLeft(hitX, hitY);
@@ -106,7 +106,7 @@ void Player::Update()
 			}
 		}
 	}
-	else 
+	else
 	{
 		animFrame = 0;
 		frameCounter = 0;
@@ -131,14 +131,14 @@ void Player::Update()
 	jumpSpeed += GRAVITY;//速度 += 加速度
 	transform_.position_.y += jumpSpeed; //座標 += 速度
 
-	if (pField != nullptr) 
+	if (pField != nullptr)
 	{
 		//(50,64)と(14,64)も見る
 		int pushR = pField->CollisionDown(transform_.position_.x + 80, transform_.position_.y + 80);
 		int pushL = pField->CollisionDown(transform_.position_.x + 40, transform_.position_.y + 80);
 		int push = max(pushR, pushL);//２つの足元のめり込みの大きい方
 		if (push >= 1) {
-			transform_.position_.y -= push -1;
+			transform_.position_.y -= push - 1;
 			jumpSpeed = 0.0f;
 			onGround = true;
 		}
@@ -167,19 +167,19 @@ void Player::Update()
 	jumpSpeed += GRAVITY;//速度 += 加速度
 	transform_.position_.y += jumpSpeed; //座標 += 速度
 
-	if (pField != nullptr) 
+	if (pField != nullptr)
 	{
 		//(50,64)と(14,64)も見る
 		int pushR = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 64);
 		int pushL = pField->CollisionDown(transform_.position_.x + 14, transform_.position_.y + 64);
 		int push = max(pushR, pushL);//２つの足元のめり込みの大きい方
-		if (push >= 1) 
+		if (push >= 1)
 		{
-			transform_.position_.y -= push -1;
+			transform_.position_.y -= push - 1;
 			jumpSpeed = 0.0f;
 			onGround = true;
 		}
-		else 
+		else
 		{
 			onGround = false;
 		}
@@ -218,12 +218,12 @@ void Player::Update()
 			}
 		}
 	}
-	
+
 	//鳥の当たり判定
 	std::list<Bird*> pBirds = GetParent()->FindGameObjects<Bird>();
-	for (Bird* pBird : pBirds) 
+	for (Bird* pBird : pBirds)
 	{
-		if (pBird->CollideCircle(transform_.position_.x + 32.0f, transform_.position_.y + 32.0f, 20.0f)) 
+		if (pBird->CollideCircle(transform_.position_.x + 32.0f, transform_.position_.y + 32.0f, 20.0f))
 		{
 			animType = 4;
 			animFrame = 0;
@@ -308,7 +308,7 @@ void Player::Update()
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, transparency + 500);
 	}
 
-		
+
 }
 
 void Player::Draw()
@@ -319,11 +319,11 @@ void Player::Draw()
 	int y = (int)transform_.position_.y;
 	Camera* cam = GetParent()->FindGameObject<Camera>();
 
-	if (cam != nullptr) 
+	if (cam != nullptr)
 	{
 		x -= cam->GetValue();
 	}
-	DrawRectGraph(x, y, animFrame * 80,180, 88, 88, hImage, TRUE);
+	DrawRectGraph(x, y, animFrame * 80, 180, 88, 88, hImage, TRUE);
 }
 
 void Player::SetPosition(int x, int y)
