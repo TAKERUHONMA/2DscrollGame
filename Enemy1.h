@@ -4,11 +4,11 @@
 /// <summary>
 /// íπÅiìGÅj
 /// </summary>
-class Bird : public GameObject
+class Enemy1 : public GameObject
 {
 public:
-	Bird(GameObject* scene);
-	~Bird();
+	Enemy1(GameObject* scene);
+	~Enemy1();
 	void Update() override;
 	void Draw() override;
 

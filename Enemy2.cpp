@@ -1,4 +1,4 @@
-#include "Bird.h"
+#include "Enemy2.h"
 #include <assert.h>
 #include "Camera.h"
 #include "TestScene.h"
@@ -9,9 +9,9 @@ namespace {
 	const float GRAVITY = 9.8f / 60.0f;//重力加速度
 };
 
-Bird::Bird(GameObject* scene)
+Enemy2::Enemy2(GameObject* scene)
 {
-	hImage = LoadGraph("Assets/mob2.png");
+	hImage = LoadGraph("Assets/mob.png");
 	assert(hImage > 0);
 	transform_.position_.x = 800.0f;
 	transform_.position_.y = 500.0f;
@@ -21,7 +21,7 @@ Bird::Bird(GameObject* scene)
 	frameCounter = 0;
 }
 
-Bird::~Bird()
+Enemy2::~Enemy2()
 {
 	if (hImage > 0)
 	{
@@ -29,26 +29,22 @@ Bird::~Bird()
 	}
 }
 
-void Bird::Update()
+void Enemy2::Update()
 {
 	Field* pField = GetParent()->FindGameObject<Field>();
 	counter -= 1;
 
-	if (counter <= 0)
+	if (++frameCounter >= 9)
 	{
-		counter = 5;
-		if (++frameCounter >= 9)
-		{
-			animFrame = (animFrame + 1) % 2;
-			frameCounter = 0;
-		}
+		animFrame = (animFrame + 1) % 3;
+		frameCounter = 0;
 	}
 
 	if (pField != nullptr)
 	{
 		//(50,64)と(14,64)も見る
-		int pushR = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 60);
-		int pushL = pField->CollisionDown(transform_.position_.x + 14, transform_.position_.y + 60);
+		int pushR = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 64);
+		int pushL = pField->CollisionDown(transform_.position_.x + 14, transform_.position_.y + 64);
 		int push = max(pushR, pushL);//２つの足元のめり込みの大きい方
 		if (push >= 1)
 		{
@@ -74,22 +70,22 @@ void Bird::Update()
 
 	if (x > SCREEN_WIDTH) //即値、マジックナンバー
 		return;
-	else if (x < 0 - 64) 
+	else if (x < 0 - 64)
 	{
 		KillMe();
 		return;
 	}
 
 
-	
-	//sinAngle += 0.4f;//度
-	//float sinValue = sinf(sinAngle * DX_PI_F / 180.0f);
-	//transform_.position_.x = baseY + sinValue * 150;
 
-	transform_.position_.x -= 0.4f;
-	
-	jumpSpeed += GRAVITY;//速度 += 加速度
-	transform_.position_.y += jumpSpeed; //座標 += 速度
+	sinAngle += 1.0f;//度
+	float sinValue = sinf(sinAngle * DX_PI_F / 180.0f);
+	transform_.position_.y = baseY + sinValue * 150;
+
+	//transform_.position_.x -= 0.5f;
+
+	//jumpSpeed += GRAVITY;//速度 += 加速度
+	//transform_.position_.y += jumpSpeed; //座標 += 速度
 
 	if (transform_.position_.y >= 700)
 	{
@@ -107,7 +103,7 @@ void Bird::Update()
 	}
 }
 
-void Bird::Draw()
+void Enemy2::Draw()
 {
 	int x = (int)transform_.position_.x;
 	int y = (int)transform_.position_.y;
@@ -117,14 +113,21 @@ void Bird::Draw()
 	}
 
 	DrawRectGraph(x, y, 0, animFrame * 64, 64, 64, hImage, TRUE);
-	
+
 	//DrawCircle(x + 32.0f, y + 32.0f, 24.0f, GetColor(255, 0, 0),0);
 }
 
-bool Bird::CollideCircle(float x, float y, float r)
+void Enemy2::SetPosition(int x, int y)
+{
+	transform_.position_.x = x;
+	transform_.position_.y = y;
+	baseY = y;
+}
+
+bool Enemy2::CollideCircle(float x, float y, float r)
 {
 	//x,y,rが相手の円の情報
-	//自分の円の情報
+    //自分の円の情報
 	float myCenterX = transform_.position_.x + 32.0f;
 	float myCenterY = transform_.position_.y + 32.0f;
 	float myR = 24.0f;
@@ -135,14 +138,7 @@ bool Bird::CollideCircle(float x, float y, float r)
 	return false;
 }
 
-void Bird::Reset()
+void Enemy2::Reset()
 {
 	KillMe();
-}
-
-void Bird::SetPosition(int x, int y)
-{
-	transform_.position_.x = x;
-	transform_.position_.y = y;
-	baseY = x;
 }

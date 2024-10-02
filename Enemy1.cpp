@@ -1,4 +1,4 @@
-#include "Livingthings.h"
+#include "Enemy1.h"
 #include <assert.h>
 #include "Camera.h"
 #include "TestScene.h"
@@ -9,9 +9,9 @@ namespace {
 	const float GRAVITY = 9.8f / 60.0f;//重力加速度
 };
 
-Livingthings::Livingthings(GameObject* scene)
+Enemy1::Enemy1(GameObject* scene)
 {
-	hImage = LoadGraph("Assets/mob.png");
+	hImage = LoadGraph("Assets/mob2.png");
 	assert(hImage > 0);
 	transform_.position_.x = 800.0f;
 	transform_.position_.y = 500.0f;
@@ -21,7 +21,7 @@ Livingthings::Livingthings(GameObject* scene)
 	frameCounter = 0;
 }
 
-Livingthings::~Livingthings()
+Enemy1::~Enemy1()
 {
 	if (hImage > 0)
 	{
@@ -29,22 +29,26 @@ Livingthings::~Livingthings()
 	}
 }
 
-void Livingthings::Update()
+void Enemy1::Update()
 {
 	Field* pField = GetParent()->FindGameObject<Field>();
 	counter -= 1;
 
-	if (++frameCounter >= 9)
+	if (counter <= 0)
 	{
-		animFrame = (animFrame + 1) % 3;
-		frameCounter = 0;
+		counter = 5;
+		if (++frameCounter >= 9)
+		{
+			animFrame = (animFrame + 1) % 2;
+			frameCounter = 0;
+		}
 	}
 
 	if (pField != nullptr)
 	{
 		//(50,64)と(14,64)も見る
-		int pushR = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 64);
-		int pushL = pField->CollisionDown(transform_.position_.x + 14, transform_.position_.y + 64);
+		int pushR = pField->CollisionDown(transform_.position_.x + 50, transform_.position_.y + 60);
+		int pushL = pField->CollisionDown(transform_.position_.x + 14, transform_.position_.y + 60);
 		int push = max(pushR, pushL);//２つの足元のめり込みの大きい方
 		if (push >= 1)
 		{
@@ -70,22 +74,22 @@ void Livingthings::Update()
 
 	if (x > SCREEN_WIDTH) //即値、マジックナンバー
 		return;
-	else if (x < 0 - 64)
+	else if (x < 0 - 64) 
 	{
 		KillMe();
 		return;
 	}
 
 
+	
+	//sinAngle += 0.4f;//度
+	//float sinValue = sinf(sinAngle * DX_PI_F / 180.0f);
+	//transform_.position_.x = baseY + sinValue * 150;
 
-	sinAngle += 1.0f;//度
-	float sinValue = sinf(sinAngle * DX_PI_F / 180.0f);
-	transform_.position_.y = baseY + sinValue * 150;
-
-	//transform_.position_.x -= 0.5f;
-
-	//jumpSpeed += GRAVITY;//速度 += 加速度
-	//transform_.position_.y += jumpSpeed; //座標 += 速度
+	transform_.position_.x -= 0.4f;
+	
+	jumpSpeed += GRAVITY;//速度 += 加速度
+	transform_.position_.y += jumpSpeed; //座標 += 速度
 
 	if (transform_.position_.y >= 700)
 	{
@@ -103,7 +107,7 @@ void Livingthings::Update()
 	}
 }
 
-void Livingthings::Draw()
+void Enemy1::Draw()
 {
 	int x = (int)transform_.position_.x;
 	int y = (int)transform_.position_.y;
@@ -113,21 +117,14 @@ void Livingthings::Draw()
 	}
 
 	DrawRectGraph(x, y, 0, animFrame * 64, 64, 64, hImage, TRUE);
-
+	
 	//DrawCircle(x + 32.0f, y + 32.0f, 24.0f, GetColor(255, 0, 0),0);
 }
 
-void Livingthings::SetPosition(int x, int y)
-{
-	transform_.position_.x = x;
-	transform_.position_.y = y;
-	baseY = y;
-}
-
-bool Livingthings::CollideCircle(float x, float y, float r)
+bool Enemy1::CollideCircle(float x, float y, float r)
 {
 	//x,y,rが相手の円の情報
-    //自分の円の情報
+	//自分の円の情報
 	float myCenterX = transform_.position_.x + 32.0f;
 	float myCenterY = transform_.position_.y + 32.0f;
 	float myR = 24.0f;
@@ -138,7 +135,14 @@ bool Livingthings::CollideCircle(float x, float y, float r)
 	return false;
 }
 
-void Livingthings::Reset()
+void Enemy1::Reset()
 {
 	KillMe();
+}
+
+void Enemy1::SetPosition(int x, int y)
+{
+	transform_.position_.x = x;
+	transform_.position_.y = y;
+	baseY = x;
 }

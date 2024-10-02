@@ -5,9 +5,9 @@
 #include "Stone.h"
 #include "Camera.h"
 #include "Field.h"
-#include "Bird.h"
+#include "Enemy1.h"
+#include "Enemy2.h"
 #include "Gool.h"
-#include "Livingthings.h"
 #include "TestScene.h"
 
 namespace {
@@ -20,6 +20,8 @@ namespace {
 	//const float INITIALVELOCITY = 18.0f;
 
 }
+
+
 Player::Player(GameObject* parent) : GameObject(sceneTop), counter(0), count(0), rcount(0)
 {
 	hImage = LoadGraph("Assets/player2.png");
@@ -38,6 +40,7 @@ Player::Player(GameObject* parent) : GameObject(sceneTop), counter(0), count(0),
 	Reset();
 }
 
+
 Player::~Player()
 {
 	if (hImage > 0)
@@ -45,6 +48,7 @@ Player::~Player()
 		DeleteGraph(hImage);
 	}
 }
+
 
 void Player::Update()
 {
@@ -56,11 +60,9 @@ void Player::Update()
 
 	if (state == S_Cry)
 	{
-		//frameCounter++;
 		if (frameCounter >= 4)
 		{
 			frameCounter = 0;
-			//animFrame = (animFrame + 1) % 2;
 		}
 		return;
 	}
@@ -69,6 +71,7 @@ void Player::Update()
 	if (!scene->CanMove())
 		return;
 
+	//前進
 	if (CheckHitKey(KEY_INPUT_D))
 	{
 		transform_.position_.x += MOVE_SPEED;
@@ -84,7 +87,7 @@ void Player::Update()
 			transform_.position_.x -= push;
 		}
 	}
-	else if (CheckHitKey(KEY_INPUT_A))
+	else if (CheckHitKey(KEY_INPUT_A))//後退
 	{
 		if (transform_.position_.x <= 1)
 		{
@@ -132,6 +135,7 @@ void Player::Update()
 	jumpSpeed += GRAVITY;//速度 += 加速度
 	transform_.position_.y += jumpSpeed; //座標 += 速度
 
+	
 	if (pField != nullptr)
 	{
 		//(50,64)と(14,64)も見る
@@ -199,6 +203,7 @@ void Player::Update()
 		}
 	}*/
 
+	//石を投げる
 	if (count == MAX_STONE)
 	{
 
@@ -220,9 +225,9 @@ void Player::Update()
 		}
 	}
 
-	//鳥の当たり判定
-	std::list<Bird*> pBirds = GetParent()->FindGameObjects<Bird>();
-	for (Bird* pBird : pBirds)
+	//敵1の当たり判定
+	std::list<Enemy1*> pBirds = GetParent()->FindGameObjects<Enemy1>();
+	for (Enemy1* pBird : pBirds)
 	{
 		if (pBird->CollideCircle(transform_.position_.x + 32.0f, transform_.position_.y + 32.0f, 20.0f))
 		{
@@ -235,9 +240,9 @@ void Player::Update()
 		}
 	}
 
-	//生き物の当たり判定
-	std::list<Livingthings*> pLivingthings = GetParent()->FindGameObjects<Livingthings>();
-	for (Livingthings* pLivingthing : pLivingthings)
+	//敵2の当たり判定
+	std::list<Enemy2*> pLivingthings = GetParent()->FindGameObjects<Enemy2>();
+	for (Enemy2* pLivingthing : pLivingthings)
 	{
 		if (pLivingthing->CollideCircle(transform_.position_.x + 32.0f, transform_.position_.y + 32.0f, 20.0f))
 		{
@@ -299,7 +304,7 @@ void Player::Update()
 		}
 	}
 
-
+	//落下した時
 	if (transform_.position_.y >= 700)
 	{
 		scene->StartDead();
@@ -335,11 +340,13 @@ void Player::Draw()
 	DrawRectGraph(x, y, animFrame * 80, 180, 88, 88, hImage, TRUE);
 }
 
+//プレイヤーのポジション
 void Player::SetPosition(int x, int y)
 {
 	transform_.position_.x = x;
 	transform_.position_.y = y;
 }
+
 
 void Player::Reset()
 {

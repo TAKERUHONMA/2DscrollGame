@@ -2,8 +2,8 @@
 #include <assert.h>
 #include "Camera.h"
 #include "Player.h"
-#include "Bird.h"
-#include "Livingthings.h"
+#include "Enemy1.h"
+#include "Enemy2.h"
 #include "Gool.h"
 #include "KanBan1.h"
 #include "Engine/CsvReader.h"
@@ -73,14 +73,14 @@ void Field::Reset()
 			break;
 			case 1://bird
 			{
-				Bird* pbird = Instantiate<Bird>(GetParent());
-				pbird->SetPosition(w * 32, h * 32);
+				Enemy1* pEne1 = Instantiate<Enemy1>(GetParent());
+				pEne1->SetPosition(w * 32, h * 32);
 			}
 			break;
 			case 2://Livingthings
 			{
-				Livingthings* pLivingthings = Instantiate<Livingthings>(GetParent());
-				pLivingthings->SetPosition(w * 32, h * 32);
+				Enemy2* pEne2 = Instantiate<Enemy2>(GetParent());
+				pEne2->SetPosition(w * 32, h * 32);
 			}
 			break;
 			case 3://Gool

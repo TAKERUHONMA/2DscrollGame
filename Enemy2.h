@@ -1,12 +1,12 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-class Livingthings
+class Enemy2
 	: public GameObject 
 {
 public:
-	Livingthings(GameObject* scene);
-	~Livingthings();
+	Enemy2(GameObject* scene);
+	~Enemy2();
 	void Update() override;
 	void Draw() override;
 
